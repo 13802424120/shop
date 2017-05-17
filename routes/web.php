@@ -15,15 +15,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//首页
+Route::get('/', 'IndexController@index');
 
+//分类列表
 Route::get('sort/lst', 'SortController@lst');
+//添加分类
 Route::any('sort/add', 'SortController@add');
+//修改分类
 Route::any('sort/edit', 'SortController@edit');
+//删除分类
 Route::any('sort/delete', 'SortController@delete');
 
-
-Route::any('goods/add', 'GoodsController@add');
+//商品列表
 Route::get('goods/lst', 'GoodsController@lst');
-Route::get('goods/type', 'GoodsController@type');
-Route::get('goods/size', 'GoodsController@size');
-Route::get('goods/property', 'GoodsController@property');
+//添加商品
+Route::any('goods/add', 'GoodsController@add');
+//修改商品
+Route::any('goods/edit', 'GoodsController@edit');
+//删除商品
+Route::any('goods/delete', 'GoodsController@delete');

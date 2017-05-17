@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="panel admin-panel">
-    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加商品</strong></div>
+    <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改商品</strong></div>
     <div class="body-content">
         <form method="post" class="form-x" action="" enctype="multipart/form-data">
             {{ csrf_field() }}
@@ -22,7 +22,7 @@
                     <label>商品名称：</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="name" data-validate="required:请输入商品名称"/>
+                    <input type="text" class="input w50" name="name" value="{{ $update->name }}" data-validate="required:请输入商品名称"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <label>价格：</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="price" data-validate="required:请输入价格"/>
+                    <input type="text" class="input w50" name="price" value="{{ $update->price }}" data-validate="required:请输入价格"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <label>图片：</label>
                 </div>
                 <div class="field">
-                    <input type="text" id="url1" class="input tips" style="width:25%; float:left;" value=""
+                    <input type="text" id="url1" class="input tips" style="width:25%; float:left;" value="{{ $update->logo }}"
                            data-toggle="hover" data-place="right" data-image=""/>
                     <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
                            style="float:left;">
@@ -68,7 +68,7 @@
                         <select name="sort" class="input w50"  data-validate="required:请选择分类">
                             <option value="">请选择分类</option>
                             @foreach ($sort_data as $v)
-                                <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                <option value="{{ $v['id'] }}"  @if ($update['sort'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                             @endforeach
                         </select>
                         <div class="tips"></div>
@@ -79,8 +79,8 @@
                         <label>是否上架：</label>
                     </div>
                     <div class="field" style="padding-top:8px;">
-                        上架 <input id="ishome" type="radio" name="is_putaway" value="1" checked="checked"/>
-                        下架 <input id="isvouch" type="radio" name="is_putaway" value="0"/>
+                        上架 <input id="ishome" type="radio" name="is_putaway" value="1" @if ($update['is_putaway'] == 1) checked="checked" @endif/>
+                        下架 <input id="isvouch" type="radio" name="is_putaway" value="0" @if ($update['is_putaway'] == 0) checked="checked" @endif/>
                     </div>
                 </div>
             </if>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="field">
                     <textarea name="describe" class="input"
-                              style="height:450px; border:1px solid #ddd;"></textarea>
+                              style="height:450px; border:1px solid #ddd;">{{ $update['describe'] }}</textarea>
                     <div class="tips"></div>
                 </div>
             </div>

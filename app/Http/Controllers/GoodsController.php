@@ -9,27 +9,38 @@ use Illuminate\Http\Request;
 class GoodsController extends Controller
 {
     /**
+     * 商品列表
+     */
+    public function lst()
+    {
+        $goods_data = Goods::paginate(10);
+        foreach ($goods_data as &$v) {
+            $sort_name = Sort::where('id', $v->sort)->value('sort_name');
+            $v->sort_name = $sort_name;
+        }
+
+        return view('goods.lst', ['goods_data' => $goods_data]);
+    }
+
+    /**
      * 添加商品
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
-        if ($request->has('goods_name')) {
-//            $file = $request->file('photo');
-//            dd($file);
+        if ($request->has('name')) {
+            $goods = new Goods;
+            $goods->name = $request->name;
+            $goods->price = $request->price;
             if ($request->hasFile('photo')) {
                 $path = $request->photo->store('photo');
+                $goods->logo = $path;
             }
-            $goods = new Goods;
-            $goods->goods_name = $request->goods_name;
-            $goods->goods_price = $request->goods_price;
-            $goods->goods_logo = $path;
-            $goods->goods_describe = $request->goods_describe;
-            $goods->goods_describe = $request->goods_describe;
+            $goods->describe = $request->describe;
+            $goods->describe = $request->describe;
             $goods->is_putaway = $request->is_putaway;
-            $goods->goods_sort = $request->goods_sort;
-            $goods->goods_describe = $request->goods_describe;
+            $goods->sort = $request->sort;
+            $goods->describe = $request->describe;
             if ($goods->save()) {
                 return redirect('goods/lst');
             }
@@ -39,40 +50,44 @@ class GoodsController extends Controller
     }
 
     /**
-     * 商品列表
+     * 修改商品
+     * @param Request $request
      */
-    public function lst()
+    public function edit(Request $request)
     {
-        $goods_data = Goods::paginate(10);
-        foreach ($goods_data as &$v) {
-            $sort_name = Sort::where('id', $v->goods_sort)->value('sort_name');
-            $v->sort_name = $sort_name;
+        $id = $request->id;
+        $update = Goods::find($id);
+        if ($request->has('name')) {
+            $update->name = $request->name;
+            $update->price = $request->price;
+            if ($request->hasFile('photo')) {
+                $path = $request->photo->store('photo');
+                $update->logo = $path;
+            }
+            $update->describe = $request->describe;
+            $update->describe = $request->describe;
+            $update->is_putaway = $request->is_putaway;
+            $update->sort = $request->sort;
+            $update->describe = $request->describe;
+            if ($update->save()) {
+                return redirect('goods/lst');
+            }
         }
-
-        return view('goods.lst', ['goods_data' => $goods_data]);
+        $sort_data = Sort::getData();
+        return view('goods.edit', ['update' => $update, 'sort_data' => $sort_data]);
     }
 
     /**
-     * 商品类型
+     * 删除商品
+     * @param Request $request
      */
-    public function type()
+    public function delete(Request $request)
     {
-
-    }
-
-    /**
-     * 商品规格
-     */
-    public function size()
-    {
-
-    }
-
-    /**
-     * 商品属性
-     */
-    public function property()
-    {
-
+        if ($request->has('id')) {
+            $id = $request->id;
+            if (Goods::destroy($id)) {
+                return redirect('goods/lst');
+            }
+        }
     }
 }
