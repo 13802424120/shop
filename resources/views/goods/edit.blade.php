@@ -28,6 +28,20 @@
             </div>
             <div class="form-group">
                 <div class="label">
+                    <label>商品品牌：</label>
+                </div>
+                <div class="field">
+                    <select name="brand_id" class="input w50"  data-validate="required:请选择品牌">
+                        <option value="">请选择品牌</option>
+                        @foreach ($brand_data as $v)
+                            <option value="{{ $v->id }}" @if ($v->id == $update->brand_id) selected="selected" @endif>{{$v->brand_name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
                     <label>价格：</label>
                 </div>
                 <div class="field">
@@ -40,7 +54,7 @@
                     <label>图片：</label>
                 </div>
                 <div class="field">
-                    <input type="text" id="url1" class="input tips" style="width:25%; float:left;" value="{{ $update->logo }}"
+                    <input type="text" id="url1" class="input tips" value="{{ $update->logo }}" style="width:25%; float:left;"
                            data-toggle="hover" data-place="right" data-image=""/>
                     <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
                            style="float:left;">
@@ -65,10 +79,10 @@
                         <label>商品分类：</label>
                     </div>
                     <div class="field">
-                        <select name="sort" class="input w50"  data-validate="required:请选择分类">
+                        <select name="sort_id" class="input w50"  data-validate="required:请选择分类">
                             <option value="">请选择分类</option>
                             @foreach ($sort_data as $v)
-                                <option value="{{ $v['id'] }}"  @if ($update['sort'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                <option value="{{ $v['id'] }}"  @if ($update['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                             @endforeach
                         </select>
                         <div class="tips"></div>

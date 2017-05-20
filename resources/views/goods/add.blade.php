@@ -28,6 +28,20 @@
             </div>
             <div class="form-group">
                 <div class="label">
+                    <label>商品品牌：</label>
+                </div>
+                <div class="field">
+                    <select name="brand_id" class="input w50"  data-validate="required:请选择品牌">
+                        <option value="">请选择品牌</option>
+                        @foreach ($brand_data as $v)
+                            <option value="{{ $v->id }}">{{$v->brand_name }}</option>
+                        @endforeach
+                    </select>
+                    <div class="tips"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">
                     <label>价格：</label>
                 </div>
                 <div class="field">
@@ -61,7 +75,6 @@
                         $("img").attr('src',src);
                     });
                 });
-
             </script>
             <if condition="$iscid eq 1">
                 <div class="form-group">
@@ -69,7 +82,7 @@
                         <label>商品分类：</label>
                     </div>
                     <div class="field">
-                        <select name="sort" class="input w50"  data-validate="required:请选择分类">
+                        <select name="sort_id" class="input w50"  data-validate="required:请选择分类">
                             <option value="">请选择分类</option>
                             @foreach ($sort_data as $v)
                                 <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>

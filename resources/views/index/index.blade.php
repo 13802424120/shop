@@ -22,8 +22,8 @@
   <h2><span class="icon-user"></span>商品管理</h2>
   <ul style="display:block">
     <li><a href="{{ url('brand') }}" target="right"><span class="icon-caret-right"></span>品牌列表</a></li>
-    <li><a href="{{ url('goods') }}" target="right"><span class="icon-caret-right"></span>商品列表</a></li>
     <li><a href="{{ url('sort') }}" target="right"><span class="icon-caret-right"></span>分类列表</a></li>
+    <li><a href="{{ url('goods') }}" target="right"><span class="icon-caret-right"></span>商品列表</a></li>
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>栏目管理</h2>
   <ul>
@@ -52,7 +52,7 @@ $(function(){
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="##">英文</a> </li>
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="{{ url('goods') }}" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" src="{{ url('brand') }}" name="right" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

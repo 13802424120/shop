@@ -12,16 +12,16 @@
     <script src="{{ asset('js/pintuer.js') }}"></script>
 </head>
 <body>
-<form method="post" action="{{ url('goods/delete') }}">
+<form method="post" action="{{ url('brand/delete') }}">
     {{ csrf_field() }}
     <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 商品列表</strong></div>
+        <div class="panel-head"><strong class="icon-reorder"> 品牌列表</strong></div>
     </div>
     <div class="padding border-bottom">
         <ul class="search">
             <li>
-                <button type="button" class="button border-yellow" onclick="window.location.href='goods/add'"><span
-                            class="icon-plus-square-o"></span> 添加商品
+                <button type="button" class="button border-yellow" onclick="window.location.href='brand/add'"><span
+                            class="icon-plus-square-o"></span> 添加品牌
                 </button>
                 <button type="button" class="button border-green" id="checkall"><span class="icon-check"></span> 全选
                 </button>
@@ -32,31 +32,19 @@
     <table class="table table-hover text-center">
         <tr>
             <th width="120">ID</th>
-            <th>商品名称</th>
-            <th>商品品牌</th>
-            <th>分类</th>
-            <th>价格</th>
-            <th>是否上架</th>
-            <th width="25%">商品描述</th>
-            <th width="150">添加时间</th>
+            <th>品牌名称</th>
             <th>操作</th>
         </tr>
-        @foreach ($goods_data as $v)
+        @foreach ($brand_data as $v)
             <tr>
                 <td><input type="checkbox" name="id[]" value="{{ $v->id }}"/>
                     {{ $v->id }}
                 </td>
-                <td>{{ $v->name }}</td>
                 <td>{{ $v->brand_name }}</td>
-                <td>{{ $v->sort_name }}</td>
-                <td>{{ $v->price}}</td>
-                <td>@if ($v->is_putaway == 0) 否 @else 是 @endif</td>
-                <td>{{ $v->describe }}</td>
-                <td>{{ $v->created_at }}</td>
                 <td>
                     <div class="button-group">
                         <a type="button" class="button border-main"
-                           href="{{ url('goods/edit') . '?id=' . $v->id}}"><span
+                           href="{{ url('brand/edit') . '?id=' . $v->id}}"><span
                                     class="icon-edit"></span>修改</a>
                         <a class="button border-red" href="javascript:void(0)" onclick="return del({{ $v->id }})"><span
                                     class="icon-trash-o"></span> 删除</a>
@@ -66,7 +54,7 @@
         @endforeach
         <tr>
             <td colspan="8">
-                {{ $goods_data->links() }}
+                {{ $brand_data->links() }}
             </td>
         </tr>
     </table>
@@ -76,7 +64,7 @@
 
     function del(id) {
         if (confirm("您确定要删除吗?")) {
-            self.location = './delete?id='+id;
+            self.location = 'brand/delete?id='+id;
         }
     }
 

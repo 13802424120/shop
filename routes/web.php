@@ -43,4 +43,10 @@ Route::group(['prefix' => 'goods'], function () {
 Route::group(['prefix' => 'brand'], function () {
     //品牌列表
     Route::get('/', 'brandController@lst');
+    //添加品牌
+    Route::any('add', 'brandController@add');
+    //修改品牌
+    Route::any('edit', 'brandController@edit');
+    //删除品牌
+    Route::any('delete', 'brandController@delete');
 });

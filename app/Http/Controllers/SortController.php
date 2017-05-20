@@ -20,7 +20,7 @@ class SortController extends Controller
     /**
      * 添加分类
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -34,7 +34,7 @@ class SortController extends Controller
             $sort->sort_name = $request->sort_name;
             $sort->parent_id = $parent_id;
             if ($sort->save()) {
-                return redirect('sort/lst');
+                return redirect('sort');
             };
         }
 
@@ -54,12 +54,12 @@ class SortController extends Controller
         if ($request->has('sort_name')) {
             // 顶级分类不允许选择上级分类
             if ($update->parent_id == 0 && $request->parent_id != 0) {
-                return redirect('sort/lst');
+                return redirect('sort');
             }
             $update->parent_id = $request->parent_id;
             $update->sort_name = $request->sort_name;
             if ($update->save()) {
-                return redirect('sort/lst');
+                return redirect('sort');
             };
         }
 
@@ -79,10 +79,10 @@ class SortController extends Controller
             $data = Sort::where('parent_id', $id)->get();
             // 父分类下有子分类不允许删除
             if ($data->first()) {
-                return redirect('sort/lst');
+                return redirect('sort');
             }
             if (Sort::destroy($id)) {
-                return redirect('sort/lst');
+                return redirect('sort');
             };
         }
     }

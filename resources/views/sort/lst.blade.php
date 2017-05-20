@@ -15,7 +15,7 @@
 <div class="panel admin-panel">
     <div class="panel-head"><strong class="icon-reorder"> 分类列表</strong></div>
     <div class="padding border-bottom">
-        <button type="button" class="button border-yellow" onclick="window.location.href='./add'"><span
+        <button type="button" class="button border-yellow" onclick="window.location.href='sort/add'"><span
                     class="icon-plus-square-o"></span> 添加分类
         </button>
     </div>
