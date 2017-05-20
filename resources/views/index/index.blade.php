@@ -21,8 +21,9 @@
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
   <h2><span class="icon-user"></span>商品管理</h2>
   <ul style="display:block">
-    <li><a href="{{ url('goods/lst') }}" target="right"><span class="icon-caret-right"></span>商品列表</a></li>
-    <li><a href="{{ url('sort/lst') }}" target="right"><span class="icon-caret-right"></span>分类列表</a></li>
+    <li><a href="{{ url('brand') }}" target="right"><span class="icon-caret-right"></span>品牌列表</a></li>
+    <li><a href="{{ url('goods') }}" target="right"><span class="icon-caret-right"></span>商品列表</a></li>
+    <li><a href="{{ url('sort') }}" target="right"><span class="icon-caret-right"></span>分类列表</a></li>
   </ul>   
   <h2><span class="icon-pencil-square-o"></span>栏目管理</h2>
   <ul>
@@ -45,13 +46,13 @@ $(function(){
 });
 </script>
 <ul class="bread">
-  <li><a href="{{ url('goods/lst') }}" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="{{ url('goods') }}" target="right" class="icon-home"> 首页</a></li>
   <li><a href="##" id="a_leader_txt">网站信息</a></li>
   <li><b>当前语言：</b><span style="color:red;">中文</span>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="##">英文</a> </li>
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="{{ url('goods/lst') }}" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" src="{{ url('goods') }}" name="right" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

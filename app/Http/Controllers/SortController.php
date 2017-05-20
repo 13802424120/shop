@@ -25,10 +25,9 @@ class SortController extends Controller
     public function add(Request $request)
     {
         if ($request->has('sort_name')) {
+            $parent_id = 0;
             if ($request->has('parent_id')) {
                 $parent_id = $request->parent_id;
-            } else {
-                $parent_id = 0;
             }
 
             $sort = new Sort;

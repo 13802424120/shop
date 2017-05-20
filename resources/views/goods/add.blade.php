@@ -45,20 +45,24 @@
                     <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
                            style="float:left;">
                     <input type="file" name="photo" id="image2" style="display:none;">
-                    <script>
-                        $("#image1").click(function () {
-                            $("#image2").click();
-                            $("#image2").change(function () {
-                                var cost = $("#image2").val();
-                                $("#url1").val(cost);
-                            });
-                        });
-
-                    </script>
                     <div class="tipss">图片尺寸：500*500</div>
                 </div>
             </div>
+            <img src=""/>
+            <script>
+                $("#image1").click(function () {
+                    $("#image2").click();
+                    $("#image2").change(function () {
+                        var cost = $("#image2").val();
+                        $("#url1").val(cost);
+                        //图片上传实时预览
+                        var fileObj = document.getElementById("image2");
+                        var src = window.URL.createObjectURL(fileObj.files[0]);
+                        $("img").attr('src',src);
+                    });
+                });
 
+            </script>
             <if condition="$iscid eq 1">
                 <div class="form-group">
                     <div class="label">

@@ -18,20 +18,29 @@ Route::get('/', function () {
 //首页
 Route::get('/', 'IndexController@index');
 
-//分类列表
-Route::get('sort/lst', 'SortController@lst');
-//添加分类
-Route::any('sort/add', 'SortController@add');
-//修改分类
-Route::any('sort/edit', 'SortController@edit');
-//删除分类
-Route::any('sort/delete', 'SortController@delete');
+Route::group(['prefix' => 'sort'], function () {
+    //分类列表
+    Route::get('/', 'SortController@lst');
+    //添加分类
+    Route::any('add', 'SortController@add');
+    //修改分类
+    Route::any('edit', 'SortController@edit');
+    //删除分类
+    Route::get('delete', 'SortController@delete');
+});
 
-//商品列表
-Route::get('goods/lst', 'GoodsController@lst');
-//添加商品
-Route::any('goods/add', 'GoodsController@add');
-//修改商品
-Route::any('goods/edit', 'GoodsController@edit');
-//删除商品
-Route::any('goods/delete', 'GoodsController@delete');
+Route::group(['prefix' => 'goods'], function () {
+    //商品列表
+    Route::get('/', 'GoodsController@lst');
+    //添加商品
+    Route::any('add', 'GoodsController@add');
+    //修改商品
+    Route::any('edit', 'GoodsController@edit');
+    //删除商品
+    Route::any('delete', 'GoodsController@delete');
+});
+
+Route::group(['prefix' => 'brand'], function () {
+    //品牌列表
+    Route::get('/', 'brandController@lst');
+});
