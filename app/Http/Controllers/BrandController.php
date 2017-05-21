@@ -67,11 +67,9 @@ class BrandController extends Controller
      */
     public function delete(Request $request)
     {
-        if ($request->has('id')) {
-            $id = $request->id;
-            if (Brand::destroy($id)) {
-                return redirect('brand');
-            }
+        $id = $request->id;
+        if (Brand::destroy($id)) {
+            return redirect('brand');
         }
     }
 }

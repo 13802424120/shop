@@ -74,16 +74,14 @@ class SortController extends Controller
      */
     public function delete(Request $request)
     {
-        if ($request->has('id')) {
-            $id = $request->id;
-            $data = Sort::where('parent_id', $id)->get();
-            // 父分类下有子分类不允许删除
-            if ($data->first()) {
-                return redirect('sort');
-            }
-            if (Sort::destroy($id)) {
-                return redirect('sort');
-            };
+        $id = $request->id;
+        $data = Sort::where('parent_id', $id)->get();
+        // 父分类下有子分类不允许删除
+        if ($data->first()) {
+            return redirect('sort');
         }
+        if (Sort::destroy($id)) {
+            return redirect('sort');
+        };
     }
 }

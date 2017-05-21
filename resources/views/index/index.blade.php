@@ -24,12 +24,10 @@
     <li><a href="{{ url('brand') }}" target="right"><span class="icon-caret-right"></span>品牌列表</a></li>
     <li><a href="{{ url('sort') }}" target="right"><span class="icon-caret-right"></span>分类列表</a></li>
     <li><a href="{{ url('goods') }}" target="right"><span class="icon-caret-right"></span>商品列表</a></li>
-  </ul>   
+    <li><a href="{{ url('type') }}" target="right"><span class="icon-caret-right"></span>类型列表</a></li>
+  </ul>
   <h2><span class="icon-pencil-square-o"></span>栏目管理</h2>
   <ul>
-    <li><a href="list.html" target="right"><span class="icon-caret-right"></span>内容管理</a></li>
-    <li><a href="add.html" target="right"><span class="icon-caret-right"></span>添加内容</a></li>
-    <li><a href="cate.html" target="right"><span class="icon-caret-right"></span>分类管理</a></li>        
   </ul>  
 </div>
 <script type="text/javascript">
@@ -47,9 +45,9 @@ $(function(){
 </script>
 <ul class="bread">
   <li><a href="{{ url('goods') }}" target="right" class="icon-home"> 首页</a></li>
-  <li><a href="##" id="a_leader_txt">网站信息</a></li>
+  {{--<li><a href="##" id="a_leader_txt">网站信息</a></li>--}}
   <li><b>当前语言：</b><span style="color:red;">中文</span>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="##">英文</a> </li>
+  {{--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="##">英文</a> </li>--}}
 </ul>
 <div class="admin">
   <iframe scrolling="auto" rameborder="0" src="{{ url('brand') }}" name="right" width="100%" height="100%"></iframe>

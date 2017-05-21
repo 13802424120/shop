@@ -42,11 +42,33 @@ Route::group(['prefix' => 'goods'], function () {
 
 Route::group(['prefix' => 'brand'], function () {
     //品牌列表
-    Route::get('/', 'brandController@lst');
+    Route::get('/', 'BrandController@lst');
     //添加品牌
-    Route::any('add', 'brandController@add');
+    Route::any('add', 'BrandController@add');
     //修改品牌
-    Route::any('edit', 'brandController@edit');
+    Route::any('edit', 'BrandController@edit');
     //删除品牌
-    Route::any('delete', 'brandController@delete');
+    Route::any('delete', 'BrandController@delete');
+});
+
+Route::group(['prefix' => 'type'], function () {
+    //类型列表
+    Route::get('/', 'TypeController@lst');
+    //添加类型
+    Route::any('add', 'TypeController@add');
+    //修改类型
+    Route::any('edit', 'TypeController@edit');
+    //删除类型
+    Route::any('delete', 'TypeController@delete');
+});
+
+Route::group(['prefix' => 'attribute'], function () {
+    //属性列表
+    Route::get('/', 'AttributeController@lst');
+    //添加属性
+    Route::any('add', 'AttributeController@add');
+    //修改属性
+    Route::any('edit', 'AttributeController@edit');
+    //删除属性
+    Route::any('delete', 'AttributeController@delete');
 });

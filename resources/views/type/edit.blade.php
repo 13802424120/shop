@@ -10,7 +10,7 @@
                     <label>品牌名称：</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="brand_name" value="{{ $update->brand_name }}" data-validate="required:请输入商品名称"/>
+                    <input type="text" class="input w50" name="type_name" value="{{ $update->type_name }}" data-validate="required:请输入商品名称"/>
                     <div class="tips"></div>
                 </div>
             </div>

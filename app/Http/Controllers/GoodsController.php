@@ -98,11 +98,9 @@ class GoodsController extends Controller
      */
     public function delete(Request $request)
     {
-        if ($request->has('id')) {
-            $id = $request->id;
-            if (Goods::destroy($id)) {
-                return redirect('goods');
-            }
+        $id = $request->id;
+        if (Goods::destroy($id)) {
+            return redirect('goods');
         }
     }
 }
