@@ -71,4 +71,6 @@ Route::group(['prefix' => 'attribute'], function () {
     Route::any('edit', 'AttributeController@edit');
     //删除属性
     Route::any('delete', 'AttributeController@delete');
+    //获取属性
+    Route::get('get', 'AttributeController@getAttribute');
 });

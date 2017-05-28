@@ -33,7 +33,9 @@ class AttributeController extends Controller
             $attribute = new Attribute();
             $attribute->attribute_name = $request->attribute_name;
             $attribute->attribute_type = $request->attribute_type;
-            $attribute->option_values = $request->option_values;
+            if ($request->has('option_values')) {
+                $attribute->option_values = $request->option_values;
+            }
             $attribute->type_id = $request->type_id;
             if ($attribute->save()) {
                 return redirect('attribute?code=' . $code);
@@ -56,7 +58,9 @@ class AttributeController extends Controller
         if ($request->has('attribute_name')) {
             $update->attribute_name = $request->attribute_name;
             $update->attribute_type = $request->attribute_type;
-            $update->option_values = $request->option_values;
+            if ($request->has('option_values')) {
+                $update->option_values = $request->option_values;
+            }
             $update->type_id = $request->type_id;
             if ($update->save()) {
                 return redirect('attribute?code=' . $code);
@@ -77,6 +81,20 @@ class AttributeController extends Controller
         $code = $request->code;
         if (Attribute::destroy($id)) {
             return redirect('attribute?code=' . $code);
+        }
+    }
+
+    /**
+     * 根据类型ID获取属性值
+     * @param Request $request
+     * @return mixed
+     */
+    public function getAttribute(Request $request)
+    {
+        if ($request->has('type_id')) {
+            $type_id = $request->type_id;
+            $data = Attribute::where('type_id', $type_id)->get();
+            return $data;
         }
     }
 

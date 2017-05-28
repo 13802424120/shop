@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Goods;
+use App\GoodsAttribute;
 use App\Sort;
+use App\Type;
 use Illuminate\Http\Request;
 
 class GoodsController extends Controller
@@ -45,16 +47,22 @@ class GoodsController extends Controller
             $goods->describe = $request->describe;
             $goods->describe = $request->describe;
             $goods->is_putaway = $request->is_putaway;
+            $goods->type_id = $request->type_id;
             $goods->sort_id = $request->sort_id;
             $goods->describe = $request->describe;
             if ($goods->save()) {
+                // 添加商品属性
+                $goods_id = $goods->id;
+                $goods_attribute = $request->attribute_value;
+                $res = GoodsAttribute::insert_goods_attribute($goods_id, $goods_attribute);
                 return redirect('goods');
             }
         }
         $brand_data = Brand::all();
         $sort_data = Sort::getData();
+        $type_data = Type::all();
         return view('goods.add',
-            ['brand_data' => $brand_data, 'sort_data' => $sort_data]
+            ['brand_data' => $brand_data, 'sort_data' => $sort_data, 'type_data' => $type_data]
         );
     }
 
