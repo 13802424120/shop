@@ -11,6 +11,9 @@
                 <button type="button" class="button border-yellow" onclick="window.location.href='type/add'"><span
                             class="icon-plus-square-o"></span> 添加类型
                 </button>
+                <button type="button" class="button border-green" id="checkall"><span class="icon-check"></span> 全选
+                </button>
+                <button type="submit" class="button border-red" onclick="return DelSelect()"><span class="icon-trash-o"></span> 批量删除</button>
             </li>
         </ul>
     </div>
@@ -22,7 +25,9 @@
         </tr>
         @foreach ($type_data as $v)
             <tr>
-                <td>{{ $v->id }}</td>
+                <td><input type="checkbox" name="id[]" value="{{ $v->id }}"/>
+                    {{ $v->id }}
+                </td>
                 <td>{{ $v->type_name }}</td>
                 <td>
                     <div class="button-group">
@@ -47,9 +52,38 @@
     </div>
 </form>
 <script type="text/javascript">
+
     function del(id) {
         if (confirm("您确定要删除吗?")) {
             self.location = 'type/delete?id='+id;
+        }
+    }
+
+    $("#checkall").click(function () {
+        $("input[name='id[]']").each(function () {
+            if (this.checked) {
+                this.checked = false;
+            }
+            else {
+                this.checked = true;
+            }
+        });
+    })
+
+    function DelSelect() {
+        var Checkbox = false;
+        $("input[name='id[]']").each(function () {
+            if (this.checked == true) {
+                Checkbox = true;
+            }
+        });
+        if (Checkbox) {
+            var t = confirm("您确认要删除选中的内容吗？");
+            if (t == false) return false;
+        }
+        else {
+            alert("请选择您要删除的内容!");
+            return false;
         }
     }
 </script>

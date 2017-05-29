@@ -97,5 +97,4 @@ class AttributeController extends Controller
             return $data;
         }
     }
-
 }

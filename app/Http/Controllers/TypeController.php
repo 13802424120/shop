@@ -61,10 +61,8 @@ class TypeController extends Controller
     public function delete(Request $request)
     {
         $id = $request->id;
-        $data = Attribute::where('type_id', $id)->get();
-        if ($data->first()){
-            Attribute::where('type_id', $id)->delete();
-        }
+        // 删除类型下的属性
+        Attribute::deleteTypeAttribute($id);
         if (Type::destroy($id)) {
             return redirect('type');
         }

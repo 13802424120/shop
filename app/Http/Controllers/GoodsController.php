@@ -54,7 +54,7 @@ class GoodsController extends Controller
                 // 添加商品属性
                 $goods_id = $goods->id;
                 $goods_attribute = $request->attribute_value;
-                $res = GoodsAttribute::insert_goods_attribute($goods_id, $goods_attribute);
+                GoodsAttribute::insertGoodsAttribute($goods_id, $goods_attribute);
                 return redirect('goods');
             }
         }
@@ -107,6 +107,8 @@ class GoodsController extends Controller
     public function delete(Request $request)
     {
         $id = $request->id;
+        // 删除商品关联的属性
+        GoodsAttribute::deleteGoodsAttribute($id);
         if (Goods::destroy($id)) {
             return redirect('goods');
         }

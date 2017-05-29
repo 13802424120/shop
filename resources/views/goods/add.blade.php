@@ -81,8 +81,7 @@
                             <label>商品描述：</label>
                         </div>
                         <div class="field">
-                    <textarea name="describe" class="input"
-                              style="height:450px; border:1px solid #ddd;"></textarea>
+                            <textarea id="container" name="describe" style="height:420px;"></textarea>
                             <div class="tips"></div>
                         </div>
                     </div>
@@ -136,6 +135,15 @@
             </form>
         </div>
     </div>
+    <!--  ueditor编辑器 -->
+    <!-- 配置文件 -->
+    <script type="text/javascript" src="{{ '/ueditor/ueditor.config.js' }}"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="{{ '/ueditor/ueditor.all.js' }}"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+    </script>
     <script>
         /******** 上传图片实时显示 *******/
         $("#image1").click(function () {
@@ -197,10 +205,10 @@
                             // 属性名称
                             html += '<label>' + v.attribute_name + '：</label></div>';
                             // 如果属性有可选值就做下拉框，否则做文本框
-                            if (v.option_values == "") {
-                                html += '<div class="field"><input type="text" class="input w50" name="attribute_value['+v.id+'][]" data-validate="required:请选择品牌" /><div class="tips"></div></div></div>';
+                            if (v.option_values == null) {
+                                html += '<div class="field"><input type="text" class="input w50" name="attribute_value[' + v.id + '][]" data-validate="required:请选择品牌" /><div class="tips"></div></div></div>';
                             } else {
-                                html += '<div class="field"><select name="attribute_value['+v.id+'][]" class="input w50" data-validate="required:请选择' + v.attribute_name + '"><option value="">请选择' + v.attribute_name + '</option>';
+                                html += '<div class="field"><select name="attribute_value[' + v.id + '][]" class="input w50" data-validate="required:请选择' + v.attribute_name + '"><option value="">请选择' + v.attribute_name + '</option>';
                                 // 把可选值根据,转化成数组
                                 var _attr = v.option_values.split(',');
                                 // 循环每个值制作option
