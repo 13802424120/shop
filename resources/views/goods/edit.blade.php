@@ -102,46 +102,91 @@
                         <div class="field">
                             <select name="type_id" class="input w50" data-validate="required:请选择商品类型">
                                 <option value="">请选择类型</option>
-                                {{--@foreach ($type_data as $v)--}}
-                                {{--<option value="{{ $v->id }}">{{$v->type_name }}</option>--}}
-                                {{--@endforeach--}}
+                                @foreach ($type_data as $v)
+                                    <option value="{{ $v->id }}"
+                                            @if ($update['type_id'] == $v['id']) selected="selected" @endif>{{$v->type_name }}</option>
+                                @endforeach
                             </select>
                             <div class="tips"></div>
                         </div>
                     </div>
-                    <div id="attr_list"></div>
-                </tables>
-                <!-- 商品图片 -->
-                <tables class="tab_table" style="display: none">
-                    <div class="form-group">
-                        <div class="label">
-                            <label>图片：</label>
-                        </div>
-                        <div class="field">
-                            <input type="text" id="url1" class="input tips" value="{{ $update->logo }}"
-                                   style="width:25%; float:left;" value=""
-                                   data-toggle="hover" data-place="right" data-image=""/>
-                            <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
-                                   style="float:left;">
-                            <input type="file" name="photo" id="image2" style="display:none;">
-                            <div class="tipss">图片尺寸：500*500</div>
-                        </div>
-                        <div class="label">
-                            <label></label>
-                        </div>
-                        <img src="" style="display:none;width: 100px;"/>
-                    </div>
-                </tables>
-                <div class="form-group">
-                    <div class="label">
-                        <label></label>
-                    </div>
-                    <div class="field">
-                        <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
-                    </div>
-                </div>
-            </form>
+                    <div id="attr_list">
+                        <!-- 循环所有原属性值 -->
+                        <?php $attr_id = []; ?>
+                        @foreach ($attribute_data as $v1)
+                            <div class="form-group">
+                                <input type="hidden" name="goods_attr_id[]" value="{{ $v1->id }}">
+                                <div class="label">
+                                    @if ($v1->attribute_type == 2)
+                                        {{-- 判断如果属性ID首次出现就是+,否则是- --}}
+                                        @if (in_array($v1->attribute_id, $attr_id))
+                                            <?php $opt = '-'; ?>
+                                        @else
+                                            <?php $opt = '+'; ?>
+                                            <?php $attr_id[] = $v1->attribute_id; ?>
+                                        @endif
+                                        <a onclick="addNewAttr(this);" href="#">[{{ $opt }}] </a>
+                                    @endif
+                                    <label>{{$v1->attribute_name}}：</label></div>
+                                @if ($v1->option_values == null)
+                                    <div class="field">
+                                        <input type="text" class="input w50"
+                                               name="attribute_value[{{$v1->attribute_id}}][]"
+                                               value="{{$v1->attribute_value}}"
+                                               data-validate="required:请输入{{$v1->attribute_name}}"/>
+                                        <div class="tips"></div>
+                                    </div></div>
+                            @else
+                                <div class="field"><select name="attribute_value[{{$v1->attribute_id}}][]"
+                                                           class="input w50"
+                                                           data-validate="required:请选择{{$v1->attribute_name}}">
+                                        <option>请选择{{$v1->attribute_name}}</option>
+                                        <?php $attr = explode(',', $v1->option_values); ?>
+                                        @foreach ($attr as $v2)
+                                            <option value="{{$v2}}"
+                                                    @if ($v2 == $v1->attribute_value)
+                                                    selected="selected"
+                                                    @endif
+                                            >{{$v2}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="tips"></div>
+                                </div></div>
+            @endif
+            @endforeach
         </div>
+        </tables>
+        <!-- 商品图片 -->
+        <tables class="tab_table" style="display: none">
+            <div class="form-group">
+                <div class="label">
+                    <label>图片：</label>
+                </div>
+                <div class="field">
+                    <input type="text" id="url1" class="input tips" value="{{ $update->logo }}"
+                           style="width:25%; float:left;" value=""
+                           data-toggle="hover" data-place="right" data-image=""/>
+                    <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
+                           style="float:left;">
+                    <input type="file" name="photo" id="image2" style="display:none;">
+                    <div class="tipss">图片尺寸：500*500</div>
+                </div>
+                <div class="label">
+                    <label></label>
+                </div>
+                <img src="" style="display:none;width: 100px;"/>
+            </div>
+        </tables>
+        <div class="form-group">
+            <div class="label">
+                <label></label>
+            </div>
+            <div class="field">
+                <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+            </div>
+        </div>
+        </form>
+    </div>
     </div>
     <!--  ueditor编辑器 -->
     <!-- 配置文件 -->
@@ -245,13 +290,32 @@
             var html = $(a).parent().parent();
             if ($(a).text() == '[+] ') {
                 var newLi = html.clone();
+                // 去掉选中状态
+                newLi.find("option:selected").removeAttr("selected");
+                // 清除克隆的隐藏域id
+                newLi.find("input[name='goods_attr_id[]']").val("");
                 // +变-
                 newLi.find("a").text('[-] ');
                 // 新的放在后面
                 html.after(newLi);
-            }
-            else {
-                html.remove();
+            } else {
+                // 首先获取属性值的id
+                var goods_attr_id = html.find("input[name = 'goods_attr_id[]']").val();
+                // 如果没有id直接删除，如果有id说明是属性值有数据需要ajax删除
+                if (goods_attr_id == '') {
+                    html.remove();
+                } else {
+                    if (confirm('删除此属性会将关联库存量数据一并删除，你确定要删除吗？')) {
+                        $.ajax({
+                            type: 'GET',
+                            url: "{{ url('goods/deleteGoodsAttr').'?goods_attr_id='}}" + goods_attr_id,
+                            success: function (data) {
+                                // 再将页面中的记录删除
+                                html.remove();
+                            }
+                        });
+                    }
+                }
             }
         }
     </script>

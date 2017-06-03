@@ -16,9 +16,11 @@ class GoodsAttribute extends Model
      * @param $goods_id
      * @param $attribute_data
      */
-    public static function insertGoodsAttribute($goods_id, $attribute_data)
+    public static function insertGoodsAttribute($attribute_data)
     {
-        foreach ($attribute_data as $key => $val) {
+        $goods_id = $attribute_data['id'];
+        $attr_value = $attribute_data['attribute_value'];
+        foreach ($attr_value as $key => $val) {
             // 属性值数组去重
             $val = array_unique($val);
             foreach ($val as $v) {
@@ -26,6 +28,32 @@ class GoodsAttribute extends Model
                 $data['attribute_id'] = $key;
                 $data['goods_id'] = $goods_id;
                 GoodsAttribute::insert($data);
+            }
+        }
+    }
+
+    /**
+     * 修改商品属性
+     * @param $attribute_data
+     */
+    public static function modifyGoodsAttribute($attribute_data)
+    {
+        $goods_id = $attribute_data['id'];
+        $goods_attr_id = $attribute_data['goods_attr_id'];
+        $attr_value = $attribute_data['attribute_value'];
+        $i = 0;
+        foreach ($attr_value as $k => $val) {
+            foreach ($val as $v) {
+                if ($goods_attr_id[$i] == '') {
+                    $data['attribute_value'] = $v;
+                    $data['attribute_id'] = $k;
+                    $data['goods_id'] = $goods_id;
+                    GoodsAttribute::insert($data);
+                } else {
+                    GoodsAttribute::where('id', $goods_attr_id[$i])
+                        ->update(['attribute_value' => $v]);
+                }
+                $i++;
             }
         }
     }

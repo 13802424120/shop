@@ -31,7 +31,7 @@
                         </div>
                         <div class="field">
                             <select name="brand_id" class="input w50" data-validate="required:请选择品牌">
-                                <option value="">请选择品牌</option>
+                                <option>请选择品牌</option>
                                 @foreach ($brand_data as $v)
                                     <option value="{{ $v->id }}">{{$v->brand_name }}</option>
                                 @endforeach
@@ -55,7 +55,7 @@
                             </div>
                             <div class="field">
                                 <select name="sort_id" class="input w50" data-validate="required:请选择分类">
-                                    <option value="">请选择分类</option>
+                                    <option>请选择分类</option>
                                     @foreach ($sort_data as $v)
                                         <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                                     @endforeach
@@ -94,7 +94,7 @@
                         </div>
                         <div class="field">
                             <select name="type_id" class="input w50" data-validate="required:请选择商品类型">
-                                <option value="">请选择类型</option>
+                                <option>请选择类型</option>
                                 @foreach ($type_data as $v)
                                     <option value="{{ $v->id }}">{{$v->type_name }}</option>
                                 @endforeach
@@ -206,7 +206,7 @@
                             html += '<label>' + v.attribute_name + '：</label></div>';
                             // 如果属性有可选值就做下拉框，否则做文本框
                             if (v.option_values == null) {
-                                html += '<div class="field"><input type="text" class="input w50" name="attribute_value[' + v.id + '][]" data-validate="required:请选择品牌" /><div class="tips"></div></div></div>';
+                                html += '<div class="field"><input type="text" class="input w50" name="attribute_value[' + v.id + '][]" data-validate="required:请输入' + v.attribute_name + '" /><div class="tips"></div></div></div>';
                             } else {
                                 html += '<div class="field"><select name="attribute_value[' + v.id + '][]" class="input w50" data-validate="required:请选择' + v.attribute_name + '"><option value="">请选择' + v.attribute_name + '</option>';
                                 // 把可选值根据,转化成数组

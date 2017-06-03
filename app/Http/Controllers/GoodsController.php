@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Attribute;
 use App\Brand;
 use App\Goods;
 use App\GoodsAttribute;
 use App\Sort;
 use App\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GoodsController extends Controller
 {
@@ -52,9 +54,7 @@ class GoodsController extends Controller
             $goods->describe = $request->describe;
             if ($goods->save()) {
                 // 添加商品属性
-                $goods_id = $goods->id;
-                $goods_attribute = $request->attribute_value;
-                GoodsAttribute::insertGoodsAttribute($goods_id, $goods_attribute);
+                GoodsAttribute::insertGoodsAttribute($request->all());
                 return redirect('goods');
             }
         }
@@ -89,14 +89,34 @@ class GoodsController extends Controller
             $update->sort_id = $request->sort_id;
             $update->describe = $request->describe;
             if ($update->save()) {
+                // 修改商品属性
+                GoodsAttribute::modifyGoodsAttribute($request->all());
                 return redirect('goods');
             }
         }
         $brand_data = Brand::all();
         $sort_data = Sort::getData();
+        $type_data = Type::all();
+        // 取出当前类型下所有的属性
+        $attribute_data = DB::select('SELECT `a`.`id` attribute_id, `a`.`attribute_name`, `a`.`attribute_type`, `a`.`option_values`, `b`.`attribute_value`, `b`.`id` FROM `attributes` AS `a` LEFT JOIN `goods_attributes` AS `b` ON (`a`.`id` = `b`.`attribute_id` AND `b`.`goods_id` = ?) WHERE `type_id` = ? ORDER BY b.attribute_id ASC', [$id, $update->type_id]);
         return view('goods.edit',
-            ['update' => $update, 'brand_data' => $brand_data, 'sort_data' => $sort_data]
+            ['update' => $update,
+                'brand_data' => $brand_data,
+                'sort_data' => $sort_data,
+                'type_data' => $type_data,
+                'attribute_data' => $attribute_data
+            ]
         );
+    }
+
+    /**
+     * 删除商品属性
+     * @param Request $request
+     */
+    public function deleteGoodsAttr(Request $request)
+    {
+        $goods_attr_id = $request->goods_attr_id;
+        GoodsAttribute::destroy($goods_attr_id);
     }
 
     /**
