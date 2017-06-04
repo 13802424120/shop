@@ -47,7 +47,6 @@ class GoodsController extends Controller
                 $goods->logo = $path;
             }
             $goods->describe = $request->describe;
-            $goods->describe = $request->describe;
             $goods->is_putaway = $request->is_putaway;
             $goods->type_id = $request->type_id;
             $goods->sort_id = $request->sort_id;
