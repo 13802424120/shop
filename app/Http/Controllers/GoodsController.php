@@ -133,4 +133,56 @@ class GoodsController extends Controller
             return redirect('goods');
         }
     }
+
+    /**
+     * 商品库存量
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function stock(Request $request)
+    {
+        // 接收商品id
+        $id = $request->id;
+        if ($request->has('stock')) {
+            $goods_attr_id = $request->goods_attribute_id;
+            $stock = $request->stock;
+            // 先计算商品属性id和库存量的比例
+            $attr_count = count($goods_attr_id);
+            $stock_count = count($stock);
+            $ratio = $attr_count / $stock_count;
+            // 循环库存量
+            $num = 0;
+            foreach ($stock as $v) {
+                // 把下面取出来的id放这里
+                $attr_id = [];
+                // 从商品属性id中取出$ratio个，循环一次取一个
+                for ($i = 0; $i < $ratio; $i++) {
+                    $attr_id[] = $goods_attr_id[$num];
+                    $num++;
+                }
+                // 把取出来的商品属性id转换成字符串
+                $goods_attribute_id = implode(',', $attr_id);
+                DB::table('goods_stocks')->insert(
+                    ['goods_id' => $id,
+                        'stock' => $v,
+                        'goods_attribute_id' => $goods_attribute_id
+                    ]
+                );
+            }
+            return redirect('goods');
+        }
+
+        // 根据商品id取出这件商品所有可选属性
+        $attribute_data = DB::table('goods_attributes as a')
+            ->select('a.id', 'a.attribute_value', 'b.attribute_name', 'b.attribute_type')
+            ->leftJoin('attributes as b', 'a.attribute_id', 'b.id')
+            ->where(['a.goods_id' => $id, 'b.attribute_type' => 2])
+            ->get();
+        // 处理二维数组转成三维数组，将属性相同的放在一起
+        $goods_attr_data = [];
+        foreach ($attribute_data as $v) {
+            $goods_attr_data[$v->attribute_name][] = $v;
+        }
+        return view('goods.stock', ['goods_attr_data' => $goods_attr_data]);
+    }
 }

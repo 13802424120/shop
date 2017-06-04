@@ -140,7 +140,7 @@
                                 <div class="field"><select name="attribute_value[{{$v1->attribute_id}}][]"
                                                            class="input w50"
                                                            data-validate="required:请选择{{$v1->attribute_name}}">
-                                        <option>请选择{{$v1->attribute_name}}</option>
+                                        <option value="">请选择{{$v1->attribute_name}}</option>
                                         <?php $attr = explode(',', $v1->option_values); ?>
                                         @foreach ($attr as $v2)
                                             <option value="{{$v2}}"

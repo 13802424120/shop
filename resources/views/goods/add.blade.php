@@ -94,7 +94,7 @@
                         </div>
                         <div class="field">
                             <select name="type_id" class="input w50" data-validate="required:请选择商品类型">
-                                <option>请选择类型</option>
+                                <option value="">请选择类型</option>
                                 @foreach ($type_data as $v)
                                     <option value="{{ $v->id }}">{{$v->type_name }}</option>
                                 @endforeach

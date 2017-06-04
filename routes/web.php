@@ -40,6 +40,8 @@ Route::group(['prefix' => 'goods'], function () {
     Route::any('delete', 'GoodsController@delete');
     //删除商品属性
     Route::get('deleteGoodsAttr', 'GoodsController@deleteGoodsAttr');
+    //商品库存量
+    Route::any('stock', 'GoodsController@stock');
 });
 
 Route::group(['prefix' => 'brand'], function () {
