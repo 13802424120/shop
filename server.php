@@ -1,4 +1,5 @@
 <?php
+echo '这里修改下！';
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
