@@ -14,12 +14,10 @@ class GoodsAttribute extends Model
     /**
      * 插入商品属性
      * @param $goods_id
-     * @param $attribute_data
+     * @param $attr_value
      */
-    public static function insertGoodsAttribute($attribute_data)
+    public static function insertGoodsAttribute($goods_id, $attr_value)
     {
-        $goods_id = $attribute_data['id'];
-        $attr_value = $attribute_data['attribute_value'];
         foreach ($attr_value as $key => $val) {
             // 属性值数组去重
             $val = array_unique($val);

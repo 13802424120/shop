@@ -25,7 +25,7 @@ class TypeController extends Controller
      */
     public function add(Request $request)
     {
-        if ($request->has('type_name')) {
+        if ($request->isMethod('post')) {
             $type = new Type();
             $type->type_name = $request->type_name;
             if ($type->save()) {
@@ -44,7 +44,7 @@ class TypeController extends Controller
     {
         $id = $request->id;
         $update = Type::find($id);
-        if ($request->has('type_name')) {
+        if ($request->isMethod('post')) {
             $update->type_name = $request->type_name;
             if ($update->save()) {
                 return redirect('type');

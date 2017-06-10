@@ -41,7 +41,7 @@
             </tr>
         @endforeach
         <tr>
-            <td colspan="8">
+            <td colspan="3">
                 {{ $brand_data->links() }}
             </td>
         </tr>

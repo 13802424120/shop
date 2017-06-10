@@ -24,7 +24,7 @@ class SortController extends Controller
      */
     public function add(Request $request)
     {
-        if ($request->has('sort_name')) {
+        if ($request->isMethod('post')) {
             $parent_id = 0;
             if ($request->has('parent_id')) {
                 $parent_id = $request->parent_id;
@@ -51,7 +51,7 @@ class SortController extends Controller
     {
         $id = $request->id;
         $update = Sort::find($id);
-        if ($request->has('sort_name')) {
+        if ($request->isMethod('post')) {
             // 顶级分类不允许选择上级分类
             if ($update->parent_id == 0 && $request->parent_id != 0) {
                 return redirect('sort');

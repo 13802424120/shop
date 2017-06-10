@@ -190,7 +190,7 @@
             if (typeId > 0) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ url('attribute/get').'?type_id='}}" + typeId,
+                    url: "{{ url('attribute/getAttr').'?type_id='}}" + typeId,
                     dataType: "json",
                     success: function (data) {
                         // 服务器返回的属性显示在页面中

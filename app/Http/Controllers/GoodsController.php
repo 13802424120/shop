@@ -6,6 +6,7 @@ use App\Attribute;
 use App\Brand;
 use App\Goods;
 use App\GoodsAttribute;
+use App\GoodsStock;
 use App\Sort;
 use App\Type;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class GoodsController extends Controller
      */
     public function add(Request $request)
     {
-        if ($request->has('name')) {
+        if ($request->isMethod('post')) {
             $goods = new Goods;
             $goods->name = $request->name;
             $goods->brand_id = $request->brand_id;
@@ -52,8 +53,10 @@ class GoodsController extends Controller
             $goods->sort_id = $request->sort_id;
             $goods->describe = $request->describe;
             if ($goods->save()) {
+                $goods_id = $goods->id;
+                $attr_value = $request->attribute_value;
                 // 添加商品属性
-                GoodsAttribute::insertGoodsAttribute($request->all());
+                GoodsAttribute::insertGoodsAttribute($goods_id, $attr_value);
                 return redirect('goods');
             }
         }
@@ -74,7 +77,7 @@ class GoodsController extends Controller
     {
         $id = $request->id;
         $update = Goods::find($id);
-        if ($request->has('name')) {
+        if ($request->isMethod('post')) {
             $update->name = $request->name;
             $update->brand_id = $request->brand_id;
             $update->price = $request->price;
@@ -115,7 +118,10 @@ class GoodsController extends Controller
     public function deleteGoodsAttr(Request $request)
     {
         $goods_attr_id = $request->goods_attr_id;
+        $goods_id = $request->goods_id;
         GoodsAttribute::destroy($goods_attr_id);
+        // 删除相关库存量数据
+        GoodsStock::where('goods_id', $goods_id)->whereRaw('FIND_IN_SET('.$goods_attr_id.', goods_attribute_id)')->delete();
     }
 
     /**
@@ -126,7 +132,9 @@ class GoodsController extends Controller
     public function delete(Request $request)
     {
         $id = $request->id;
-        // 删除商品关联的属性
+        // 删除商品库存量
+        GoodsStock::where('goods_id', $id)->delete();
+        // 删除商品属性
         GoodsAttribute::deleteGoodsAttribute($id);
         if (Goods::destroy($id)) {
             return redirect('goods');
@@ -142,32 +150,14 @@ class GoodsController extends Controller
     {
         // 接收商品id
         $id = $request->id;
-        if ($request->has('stock')) {
-            $goods_attr_id = $request->goods_attribute_id;
-            $stock = $request->stock;
-            // 先计算商品属性id和库存量的比例
-            $attr_count = count($goods_attr_id);
-            $stock_count = count($stock);
-            $ratio = $attr_count / $stock_count;
-            // 循环库存量
-            $num = 0;
-            foreach ($stock as $v) {
-                // 把下面取出来的id放这里
-                $attr_id = [];
-                // 从商品属性id中取出$ratio个，循环一次取一个
-                for ($i = 0; $i < $ratio; $i++) {
-                    $attr_id[] = $goods_attr_id[$num];
-                    $num++;
-                }
-                // 把取出来的商品属性id转换成字符串
-                $goods_attribute_id = implode(',', $attr_id);
-                DB::table('goods_stocks')->insert(
-                    ['goods_id' => $id,
-                        'stock' => $v,
-                        'goods_attribute_id' => $goods_attribute_id
-                    ]
-                );
-            }
+        // 先取出这件商品已经设置过的库存量
+        $goods_stock = GoodsStock::where('goods_id', $id)->get()->toArray();
+        // 添加库存数据
+        if ($request->isMethod('post')) {
+            // 先删除原库存
+            GoodsStock::where('goods_id', $id)->delete();
+            // 再添加新库存
+            GoodsStock::addGoodsStock($request->all());
             return redirect('goods');
         }
 
@@ -182,6 +172,10 @@ class GoodsController extends Controller
         foreach ($attribute_data as $v) {
             $goods_attr_data[$v->attribute_name][] = $v;
         }
-        return view('goods.stock', ['goods_attr_data' => $goods_attr_data]);
+        return view('goods.stock',
+            ['goods_attr_data' => $goods_attr_data,
+                'goods_stock' => $goods_stock
+            ]
+        );
     }
 }

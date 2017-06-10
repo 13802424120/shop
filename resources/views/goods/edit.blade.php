@@ -13,55 +13,29 @@
         </div>
         <div class="body-content">
             <form method="post" class="form-x" action="" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <!-- 通用信息 -->
+                {{ csrf_field() }}
+                <!-- 通用信息 -->
                 <tables class="tab_table">
-                    <div class="form-group">
-                        <div class="label">
-                            <label>商品名称：</label>
-                        </div>
-                        <div class="field">
-                            <input type="text" class="input w50" name="name" value="{{ $update->name }}"
-                                   data-validate="required:请输入商品名称"/>
-                            <div class="tips"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="label">
-                            <label>商品品牌：</label>
-                        </div>
-                        <div class="field">
-                            <select name="brand_id" class="input w50" data-validate="required:请选择品牌">
-                                <option value="">请选择品牌</option>
-                                @foreach ($brand_data as $v)
-                                    <option value="{{ $v->id }}"
-                                            @if ($v->id == $update->brand_id) selected="selected" @endif>{{$v->brand_name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="tips"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="label">
-                            <label>价格：</label>
-                        </div>
-                        <div class="field">
-                            <input type="text" class="input w50" name="price" value="{{ $update->price }}"
-                                   data-validate="required:请输入价格"/>
-                            <div class="tips"></div>
-                        </div>
-                    </div>
-                    <if condition="$iscid eq 1">
                         <div class="form-group">
                             <div class="label">
-                                <label>商品分类：</label>
+                                <label>商品名称：</label>
                             </div>
                             <div class="field">
-                                <select name="sort_id" class="input w50" data-validate="required:请选择分类">
-                                    <option value="">请选择分类</option>
-                                    @foreach ($sort_data as $v)
-                                        <option value="{{ $v['id'] }}"
-                                                @if ($update['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                <input type="text" class="input w50" name="name" value="{{ $update->name }}"
+                                       data-validate="required:请输入商品名称"/>
+                                <div class="tips"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="label">
+                                <label>商品品牌：</label>
+                            </div>
+                            <div class="field">
+                                <select name="brand_id" class="input w50" data-validate="required:请选择品牌">
+                                    <option value="">请选择品牌</option>
+                                    @foreach ($brand_data as $v)
+                                        <option value="{{ $v->id }}"
+                                                @if ($v->id == $update->brand_id) selected="selected" @endif>{{$v->brand_name }}</option>
                                     @endforeach
                                 </select>
                                 <div class="tips"></div>
@@ -69,30 +43,56 @@
                         </div>
                         <div class="form-group">
                             <div class="label">
-                                <label>是否上架：</label>
+                                <label>价格：</label>
                             </div>
-                            <div class="field" style="padding-top:8px;">
-                                上架 <input id="ishome" type="radio" name="is_putaway" value="1"
-                                          @if ($update['is_putaway'] == 1) checked="checked" @endif/>
-                                下架 <input id="isvouch" type="radio" name="is_putaway" value="0"
-                                          @if ($update['is_putaway'] == 0) checked="checked" @endif/>
+                            <div class="field">
+                                <input type="text" class="input w50" name="price" value="{{ $update->price }}"
+                                       data-validate="required:请输入价格"/>
+                                <div class="tips"></div>
                             </div>
                         </div>
-                    </if>
-                </tables>
+                        <if condition="$iscid eq 1">
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>商品分类：</label>
+                                </div>
+                                <div class="field">
+                                    <select name="sort_id" class="input w50" data-validate="required:请选择分类">
+                                        <option value="">请选择分类</option>
+                                        @foreach ($sort_data as $v)
+                                            <option value="{{ $v['id'] }}"
+                                                    @if ($update['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="tips"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="label">
+                                    <label>是否上架：</label>
+                                </div>
+                                <div class="field" style="padding-top:8px;">
+                                    上架 <input id="ishome" type="radio" name="is_putaway" value="1"
+                                              @if ($update['is_putaway'] == 1) checked="checked" @endif/>
+                                    下架 <input id="isvouch" type="radio" name="is_putaway" value="0"
+                                              @if ($update['is_putaway'] == 0) checked="checked" @endif/>
+                                </div>
+                            </div>
+                        </if>
+                    </tables>
                 <!-- 商品描述 -->
                 <tables class="tab_table" style="display: none">
-                    <div class="form-group">
-                        <div class="label">
-                            <label>商品描述：</label>
+                        <div class="form-group">
+                            <div class="label">
+                                <label>商品描述：</label>
+                            </div>
+                            <div class="field">
+                                <textarea id="container" name="describe"
+                                          style="height:420px;">{{ $update['describe'] }}</textarea>
+                                <div class="tips"></div>
+                            </div>
                         </div>
-                        <div class="field">
-                            <textarea id="container" name="describe"
-                                      style="height:420px;">{{ $update['describe'] }}</textarea>
-                            <div class="tips"></div>
-                        </div>
-                    </div>
-                </tables>
+                    </tables>
                 <!-- 商品属性 -->
                 <tables class="tab_table" style="display: none">
                     <div class="form-group">
@@ -104,7 +104,7 @@
                                 <option value="">请选择类型</option>
                                 @foreach ($type_data as $v)
                                     <option value="{{ $v->id }}"
-                                            @if ($update['type_id'] == $v['id']) selected="selected" @endif>{{$v->type_name }}</option>
+                                        @if ($update['type_id'] == $v['id']) selected="selected" @endif>{{$v->type_name }}</option>
                                 @endforeach
                             </select>
                             <div class="tips"></div>
@@ -112,72 +112,66 @@
                     </div>
                     <div id="attr_list">
                         <!-- 循环所有原属性值 -->
-                        <?php $attr_id = []; ?>
+                        @php $attr_id = [] @endphp
                         @foreach ($attribute_data as $v1)
-                            <div class="form-group">
-                                <input type="hidden" name="goods_attr_id[]" value="{{ $v1->id }}">
-                                <div class="label">
-                                    @if ($v1->attribute_type == 2)
-                                        {{-- 判断如果属性ID首次出现就是+,否则是- --}}
-                                        @if (in_array($v1->attribute_id, $attr_id))
-                                            <?php $opt = '-'; ?>
-                                        @else
-                                            <?php $opt = '+'; ?>
-                                            <?php $attr_id[] = $v1->attribute_id; ?>
-                                        @endif
-                                        <a onclick="addNewAttr(this);" href="#">[{{ $opt }}] </a>
+                        <div class="form-group">
+                            <input type="hidden" name="goods_attr_id[]" value="{{ $v1->id }}">
+                            <div class="label">
+                                @if ($v1->attribute_type == 2)
+                                    {{-- 判断如果属性ID首次出现就是+,否则是- --}}
+                                    @if (in_array($v1->attribute_id, $attr_id))
+                                        @php $opt = '-' @endphp
+                                    @else
+                                        @php $opt = '+' @endphp
+                                        @php $attr_id[] = $v1->attribute_id @endphp
                                     @endif
-                                    <label>{{$v1->attribute_name}}：</label></div>
-                                @if ($v1->option_values == null)
-                                    <div class="field">
-                                        <input type="text" class="input w50"
-                                               name="attribute_value[{{$v1->attribute_id}}][]"
-                                               value="{{$v1->attribute_value}}"
-                                               data-validate="required:请输入{{$v1->attribute_name}}"/>
-                                        <div class="tips"></div>
-                                    </div></div>
+                                    <a onclick="addNewAttr(this);" href="#">[{{ $opt }}] </a>
+                                @endif
+                                <label>{{$v1->attribute_name}}：</label>
+                            </div>
+                            @if ($v1->option_values == null)
+                                <div class="field">
+                                    <input type="text" class="input w50" name="attribute_value[{{$v1->attribute_id}}][]" value="{{$v1->attribute_value}}" data-validate="required:请输入{{$v1->attribute_name}}"/>
+                                    <div class="tips"></div>
+                                </div>
                             @else
-                                <div class="field"><select name="attribute_value[{{$v1->attribute_id}}][]"
-                                                           class="input w50"
-                                                           data-validate="required:请选择{{$v1->attribute_name}}">
+                                <div class="field">
+                                    <select name="attribute_value[{{$v1->attribute_id}}][]" class="input w50" data-validate="required:请选择{{$v1->attribute_name}}">
                                         <option value="">请选择{{$v1->attribute_name}}</option>
-                                        <?php $attr = explode(',', $v1->option_values); ?>
+                                        @php $attr = explode(',', $v1->option_values) @endphp
                                         @foreach ($attr as $v2)
-                                            <option value="{{$v2}}"
-                                                    @if ($v2 == $v1->attribute_value)
-                                                    selected="selected"
-                                                    @endif
-                                            >{{$v2}}</option>
+                                            <option value="{{$v2}}" @if ($v2 == $v1->attribute_value)selected="selected"@endif>{{$v2}}</option>
                                         @endforeach
                                     </select>
                                     <div class="tips"></div>
-                                </div></div>
-            @endif
-            @endforeach
-        </div>
-        </tables>
-        <!-- 商品图片 -->
-        <tables class="tab_table" style="display: none">
-            <div class="form-group">
-                <div class="label">
-                    <label>图片：</label>
+                                </div>
+                                @endif
+                        </div>
+                        @endforeach
+                    </div>
+                </tables>
+                <!-- 商品图片 -->
+                <tables class="tab_table" style="display: none">
+                    <div class="form-group">
+                    <div class="label">
+                        <label>图片：</label>
+                    </div>
+                    <div class="field">
+                        <input type="text" id="url1" class="input tips" value="{{ $update->logo }}"
+                               style="width:25%; float:left;" value=""
+                               data-toggle="hover" data-place="right" data-image=""/>
+                        <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
+                               style="float:left;">
+                        <input type="file" name="photo" id="image2" style="display:none;">
+                        <div class="tipss">图片尺寸：500*500</div>
+                    </div>
+                    <div class="label">
+                        <label></label>
+                    </div>
+                    <img src="" style="display:none;width: 100px;"/>
                 </div>
-                <div class="field">
-                    <input type="text" id="url1" class="input tips" value="{{ $update->logo }}"
-                           style="width:25%; float:left;" value=""
-                           data-toggle="hover" data-place="right" data-image=""/>
-                    <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
-                           style="float:left;">
-                    <input type="file" name="photo" id="image2" style="display:none;">
-                    <div class="tipss">图片尺寸：500*500</div>
-                </div>
-                <div class="label">
-                    <label></label>
-                </div>
-                <img src="" style="display:none;width: 100px;"/>
-            </div>
-        </tables>
-        <div class="form-group">
+                </tables>
+                <div class="form-group">
             <div class="label">
                 <label></label>
             </div>
@@ -185,8 +179,8 @@
                 <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
             </div>
         </div>
-        </form>
-    </div>
+            </form>
+        </div>
     </div>
     <!--  ueditor编辑器 -->
     <!-- 配置文件 -->
@@ -243,7 +237,7 @@
             if (typeId > 0) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ url('attribute/get').'?type_id='}}" + typeId,
+                    url: "{{ url('attribute/getAttr').'?type_id='}}" + typeId,
                     dataType: "json",
                     success: function (data) {
                         // 服务器返回的属性显示在页面中
@@ -301,14 +295,16 @@
             } else {
                 // 首先获取属性值的id
                 var goods_attr_id = html.find("input[name = 'goods_attr_id[]']").val();
+                var token = $("input[name = '_token']").val();
                 // 如果没有id直接删除，如果有id说明是属性值有数据需要ajax删除
                 if (goods_attr_id == '') {
                     html.remove();
                 } else {
                     if (confirm('删除此属性会将关联库存量数据一并删除，你确定要删除吗？')) {
                         $.ajax({
-                            type: 'GET',
-                            url: "{{ url('goods/deleteGoodsAttr').'?goods_attr_id='}}" + goods_attr_id,
+                            type: 'post',
+                            url: '{{ url('goods/deleteGoodsAttr') }}',
+                            data: {_token:token, goods_attr_id:goods_attr_id, goods_id:'{{ $update->id }}'},
                             success: function (data) {
                                 // 再将页面中的记录删除
                                 html.remove();

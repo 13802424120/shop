@@ -29,7 +29,7 @@ class AttributeController extends Controller
     public function add(Request $request)
     {
         $code = $request->code;
-        if ($request->has('attribute_name')) {
+        if ($request->isMethod('post')) {
             $attribute = new Attribute();
             $attribute->attribute_name = $request->attribute_name;
             $attribute->attribute_type = $request->attribute_type;
@@ -55,7 +55,7 @@ class AttributeController extends Controller
         $id = $request->id;
         $code = $request->code;
         $update = Attribute::find($id);
-        if ($request->has('attribute_name')) {
+        if ($request->isMethod('post')) {
             $update->attribute_name = $request->attribute_name;
             $update->attribute_type = $request->attribute_type;
             if ($request->has('option_values')) {
@@ -89,12 +89,10 @@ class AttributeController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function getAttribute(Request $request)
+    public function getAttr(Request $request)
     {
-        if ($request->has('type_id')) {
-            $type_id = $request->type_id;
-            $data = Attribute::where('type_id', $type_id)->get();
-            return $data;
-        }
+        $type_id = $request->type_id;
+        $data = Attribute::where('type_id', $type_id)->get();
+        return $data;
     }
 }

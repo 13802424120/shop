@@ -24,7 +24,7 @@ class BrandController extends Controller
      */
     public function add(Request $request)
     {
-        if ($request->has('brand_name')) {
+        if ($request->isMethod('post')) {
             $brand = new Brand();
             $brand->brand_name = $request->brand_name;
             if ($request->hasFile('photo')) {
@@ -47,7 +47,7 @@ class BrandController extends Controller
     {
         $id = $request->id;
         $update = Brand::find($id);
-        if ($request->has('brand_name')) {
+        if ($request->isMethod('post')) {
             $update->brand_name = $request->brand_name;
             if ($request->hasFile('photo')) {
                 $path = $request->photo->store('photo');

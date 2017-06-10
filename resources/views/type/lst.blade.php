@@ -44,12 +44,11 @@
             </tr>
         @endforeach
         <tr>
-            <td colspan="8">
+            <td colspan="3">
                 {{ $type_data->links() }}
             </td>
         </tr>
     </table>
-    </div>
 </form>
 <script type="text/javascript">
 
