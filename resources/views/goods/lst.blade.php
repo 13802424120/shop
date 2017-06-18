@@ -24,7 +24,6 @@
             <th>商品品牌</th>
             <th>主分类</th>
             <th>扩展分类</th>
-            <th>价格</th>
             <th>是否上架</th>
             <th width="150">添加时间</th>
             <th>操作</th>
@@ -37,8 +36,7 @@
                 <td>{{ $v->name }}</td>
                 <td>{{ $v->brand_name }}</td>
                 <td>{{ $v->sort_name }}</td>
-                <td></td>
-                <td>{{ $v->price}}</td>
+                <td>{{ $v->extend_sort_name }}</td>
                 <td>@if ($v->is_putaway == 0) 否 @else 是 @endif</td>
                 <td>{{ $v->created_at }}</td>
                 <td>
@@ -56,7 +54,7 @@
             </tr>
         @endforeach
         <tr>
-            <td colspan="9">
+            <td colspan="8">
                 {{ $goods_data->links() }}
             </td>
         </tr>

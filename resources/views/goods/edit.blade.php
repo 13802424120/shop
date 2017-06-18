@@ -43,42 +43,69 @@
                         </div>
                         <div class="form-group">
                             <div class="label">
-                                <label>价格：</label>
+                                <label>商品分类：</label>
                             </div>
                             <div class="field">
-                                <input type="text" class="input w50" name="price" value="{{ $update->price }}"
-                                       data-validate="required:请输入价格"/>
+                                <select name="sort_id" class="input w50" data-validate="required:请选择分类">
+                                    <option value="">请选择分类</option>
+                                    @foreach ($sort_data as $v)
+                                        <option value="{{ $v['id'] }}"
+                                                @if ($update['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="tips"></div>
                             </div>
                         </div>
-                        <if condition="$iscid eq 1">
+                        @if ($extend_sort_data)
+                            @foreach ($extend_sort_data as $key => $cost)
+                                <div class="form-group">
+                                    <div class="label">
+                                        <a onclick="addNewSort(this);" href="#">@if ($key == 0)[+] @else[-] @endif</a>
+                                        <label>扩展分类：</label>
+                                    </div>
+                                    <div class="field">
+                                        <select name="extend_sort_id[]" class="input w50" data-validate="required:请选择分类">
+                                            <option>请选择分类</option>
+                                            @foreach ($sort_data as $v)
+                                                <option value="{{ $v['id'] }}"
+                                                    @if ($cost == $v['id'])
+                                                        selected="selected"
+                                                    @endif
+                                                >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="tips"></div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
                             <div class="form-group">
                                 <div class="label">
-                                    <label>商品分类：</label>
+                                    <a onclick="addNewSort(this);" href="#">[+] </a>
+                                    <label>扩展分类：</label>
                                 </div>
                                 <div class="field">
-                                    <select name="sort_id" class="input w50" data-validate="required:请选择分类">
-                                        <option value="">请选择分类</option>
+                                    <select name="extend_sort_id[]" class="input w50" data-validate="required:请选择分类">
+                                        <option>请选择分类</option>
                                         @foreach ($sort_data as $v)
-                                            <option value="{{ $v['id'] }}"
-                                                    @if ($update['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                            <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                                         @endforeach
                                     </select>
                                     <div class="tips"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="label">
-                                    <label>是否上架：</label>
-                                </div>
-                                <div class="field" style="padding-top:8px;">
-                                    上架 <input id="ishome" type="radio" name="is_putaway" value="1"
-                                              @if ($update['is_putaway'] == 1) checked="checked" @endif/>
-                                    下架 <input id="isvouch" type="radio" name="is_putaway" value="0"
-                                              @if ($update['is_putaway'] == 0) checked="checked" @endif/>
-                                </div>
+                        @endif
+                        <div class="form-group">
+                            <div class="label">
+                                <label>是否上架：</label>
                             </div>
-                        </if>
+                            <div class="field" style="padding-top:8px;">
+                                上架 <input id="ishome" type="radio" name="is_putaway" value="1"
+                                          @if ($update['is_putaway'] == 1) checked="checked" @endif/>
+                                下架 <input id="isvouch" type="radio" name="is_putaway" value="0"
+                                          @if ($update['is_putaway'] == 0) checked="checked" @endif/>
+                            </div>
+                        </div>
                     </tables>
                 <!-- 商品描述 -->
                 <tables class="tab_table" style="display: none">
@@ -276,7 +303,25 @@
                 // 如果选的是请选择就直接清空
                 $("#attr_list").html("");
             }
-        })
+        });
+
+        // 点击扩展分类的+号
+        function addNewSort(a) {
+            // 先获取所在的html
+            var html = $(a).parent().parent();
+            if ($(a).text() == '[+] ') {
+                var newLi = html.clone();
+                // 去掉选中状态
+                newLi.find("option:selected").removeAttr("selected");
+                // +变-
+                newLi.find("a").text('[-] ');
+                // 新的放在后面
+                html.after(newLi);
+            }
+            else {
+                html.remove();
+            }
+        }
 
         // 点击属性的+号
         function addNewAttr(a) {

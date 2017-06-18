@@ -26,7 +26,7 @@ class Attribute extends Model
         } else {
             $data = Attribute::where('type_id', $type_id)->get();
             if ($data->first()) {
-                GoodsAttribute::where('type_id', $type_id)->delete();
+                GoodsAttr::where('type_id', $type_id)->delete();
             }
         }
 

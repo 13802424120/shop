@@ -41,38 +41,42 @@
                     </div>
                     <div class="form-group">
                         <div class="label">
-                            <label>价格：</label>
+                            <label>主分类：</label>
                         </div>
                         <div class="field">
-                            <input type="text" class="input w50" name="price" data-validate="required:请输入价格"/>
+                            <select name="sort_id" class="input w50" data-validate="required:请选择分类">
+                                <option>请选择分类</option>
+                                @foreach ($sort_data as $v)
+                                    <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                @endforeach
+                            </select>
                             <div class="tips"></div>
                         </div>
                     </div>
-                    <if condition="$iscid eq 1">
-                        <div class="form-group">
-                            <div class="label">
-                                <label>商品分类：</label>
-                            </div>
-                            <div class="field">
-                                <select name="sort_id" class="input w50" data-validate="required:请选择分类">
-                                    <option>请选择分类</option>
-                                    @foreach ($sort_data as $v)
-                                        <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="tips"></div>
-                            </div>
+                    <div class="form-group">
+                        <div class="label">
+                            <a onclick="addNewAttr(this);" href="#">[+] </a>
+                            <label>扩展分类：</label>
                         </div>
-                        <div class="form-group">
-                            <div class="label">
-                                <label>是否上架：</label>
-                            </div>
-                            <div class="field" style="padding-top:8px;">
-                                上架 <input id="ishome" type="radio" name="is_putaway" value="1" checked="checked"/>
-                                下架 <input id="isvouch" type="radio" name="is_putaway" value="0"/>
-                            </div>
+                        <div class="field">
+                            <select name="extend_sort_id[]" class="input w50" data-validate="required:请选择分类">
+                                <option>请选择分类</option>
+                                @foreach ($sort_data as $v)
+                                    <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                @endforeach
+                            </select>
+                            <div class="tips"></div>
                         </div>
-                    </if>
+                    </div>
+                    <div class="form-group">
+                        <div class="label">
+                            <label>是否上架：</label>
+                        </div>
+                        <div class="field" style="padding-top:8px;">
+                            上架 <input id="ishome" type="radio" name="is_putaway" value="1" checked="checked"/>
+                            下架 <input id="isvouch" type="radio" name="is_putaway" value="0"/>
+                        </div>
+                    </div>
                 </tables>
                 <!-- 商品描述 -->
                 <tables class="tab_table" style="display: none">
