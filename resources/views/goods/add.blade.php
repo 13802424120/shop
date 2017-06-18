@@ -203,16 +203,16 @@
                         $(data).each(function (k, v) {
                             html += '<div class="form-group"><div class="label">';
                             // 如果这个属性类型是可选的就有一个+
-                            if (v.attribute_type == 2) {
+                            if (v.attr_type == 2) {
                                 html += '<a onclick="addNewAttr(this);" href="#">[+] </a>';
                             }
                             // 属性名称
-                            html += '<label>' + v.attribute_name + '：</label></div>';
+                            html += '<label>' + v.attr_name + '：</label></div>';
                             // 如果属性有可选值就做下拉框，否则做文本框
                             if (v.option_values == null) {
-                                html += '<div class="field"><input type="text" class="input w50" name="attribute_value[' + v.id + '][]" data-validate="required:请输入' + v.attribute_name + '" /><div class="tips"></div></div></div>';
+                                html += '<div class="field"><input type="text" class="input w50" name="attr_value[' + v.id + '][]" data-validate="required:请输入' + v.attr_name + '" /><div class="tips"></div></div></div>';
                             } else {
-                                html += '<div class="field"><select name="attribute_value[' + v.id + '][]" class="input w50" data-validate="required:请选择' + v.attribute_name + '"><option value="">请选择' + v.attribute_name + '</option>';
+                                html += '<div class="field"><select name="attr_value[' + v.id + '][]" class="input w50" data-validate="required:请选择' + v.attr_name + '"><option value="">请选择' + v.attr_name + '</option>';
                                 // 把可选值根据,转化成数组
                                 var _attr = v.option_values.split(',');
                                 // 循环每个值制作option

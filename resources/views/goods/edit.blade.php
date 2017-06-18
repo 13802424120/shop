@@ -21,7 +21,7 @@
                                 <label>商品名称：</label>
                             </div>
                             <div class="field">
-                                <input type="text" class="input w50" name="name" value="{{ $update->name }}"
+                                <input type="text" class="input w50" name="name" value="{{ $res->name }}"
                                        data-validate="required:请输入商品名称"/>
                                 <div class="tips"></div>
                             </div>
@@ -35,7 +35,7 @@
                                     <option value="">请选择品牌</option>
                                     @foreach ($brand_data as $v)
                                         <option value="{{ $v->id }}"
-                                                @if ($v->id == $update->brand_id) selected="selected" @endif>{{$v->brand_name }}</option>
+                                                @if ($v->id == $res->brand_id) selected="selected" @endif>{{$v->brand_name }}</option>
                                     @endforeach
                                 </select>
                                 <div class="tips"></div>
@@ -50,7 +50,7 @@
                                     <option value="">请选择分类</option>
                                     @foreach ($sort_data as $v)
                                         <option value="{{ $v['id'] }}"
-                                                @if ($update['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                                                @if ($res['sort_id'] == $v['id']) selected="selected" @endif >{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                                     @endforeach
                                 </select>
                                 <div class="tips"></div>
@@ -101,9 +101,9 @@
                             </div>
                             <div class="field" style="padding-top:8px;">
                                 上架 <input id="ishome" type="radio" name="is_putaway" value="1"
-                                          @if ($update['is_putaway'] == 1) checked="checked" @endif/>
+                                          @if ($res['is_putaway'] == 1) checked="checked" @endif/>
                                 下架 <input id="isvouch" type="radio" name="is_putaway" value="0"
-                                          @if ($update['is_putaway'] == 0) checked="checked" @endif/>
+                                          @if ($res['is_putaway'] == 0) checked="checked" @endif/>
                             </div>
                         </div>
                     </tables>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="field">
                                 <textarea id="container" name="describe"
-                                          style="height:420px;">{{ $update['describe'] }}</textarea>
+                                          style="height:420px;">{{ $res['describe'] }}</textarea>
                                 <div class="tips"></div>
                             </div>
                         </div>
@@ -131,7 +131,7 @@
                                 <option value="">请选择类型</option>
                                 @foreach ($type_data as $v)
                                     <option value="{{ $v->id }}"
-                                        @if ($update['type_id'] == $v['id']) selected="selected" @endif>{{$v->type_name }}</option>
+                                        @if ($res['type_id'] == $v['id']) selected="selected" @endif>{{$v->type_name }}</option>
                                 @endforeach
                             </select>
                             <div class="tips"></div>
@@ -140,34 +140,34 @@
                     <div id="attr_list">
                         <!-- 循环所有原属性值 -->
                         @php $attr_id = [] @endphp
-                        @foreach ($attribute_data as $v1)
+                        @foreach ($attr_data as $v1)
                         <div class="form-group">
                             <input type="hidden" name="goods_attr_id[]" value="{{ $v1->id }}">
                             <div class="label">
-                                @if ($v1->attribute_type == 2)
+                                @if ($v1->attr_type == 2)
                                     {{-- 判断如果属性ID首次出现就是+,否则是- --}}
-                                    @if (in_array($v1->attribute_id, $attr_id))
+                                    @if (in_array($v1->attrs_id, $attr_id))
                                         @php $opt = '-' @endphp
                                     @else
                                         @php $opt = '+' @endphp
-                                        @php $attr_id[] = $v1->attribute_id @endphp
+                                        @php $attr_id[] = $v1->attrs_id @endphp
                                     @endif
                                     <a onclick="addNewAttr(this);" href="#">[{{ $opt }}] </a>
                                 @endif
-                                <label>{{$v1->attribute_name}}：</label>
+                                <label>{{$v1->attr_name}}：</label>
                             </div>
                             @if ($v1->option_values == null)
                                 <div class="field">
-                                    <input type="text" class="input w50" name="attribute_value[{{$v1->attribute_id}}][]" value="{{$v1->attribute_value}}" data-validate="required:请输入{{$v1->attribute_name}}"/>
+                                    <input type="text" class="input w50" name="attr_value[{{$v1->attrs_id}}][]" value="{{$v1->attr_value}}" data-validate="required:请输入{{$v1->attr_name}}"/>
                                     <div class="tips"></div>
                                 </div>
                             @else
                                 <div class="field">
-                                    <select name="attribute_value[{{$v1->attribute_id}}][]" class="input w50" data-validate="required:请选择{{$v1->attribute_name}}">
-                                        <option value="">请选择{{$v1->attribute_name}}</option>
+                                    <select name="attr_value[{{$v1->attrs_id}}][]" class="input w50" data-validate="required:请选择{{$v1->attr_name}}">
+                                        <option value="">请选择{{$v1->attr_name}}</option>
                                         @php $attr = explode(',', $v1->option_values) @endphp
                                         @foreach ($attr as $v2)
-                                            <option value="{{$v2}}" @if ($v2 == $v1->attribute_value)selected="selected"@endif>{{$v2}}</option>
+                                            <option value="{{$v2}}" @if ($v2 == $v1->attr_value)selected="selected"@endif>{{$v2}}</option>
                                         @endforeach
                                     </select>
                                     <div class="tips"></div>
@@ -184,7 +184,7 @@
                         <label>图片：</label>
                     </div>
                     <div class="field">
-                        <input type="text" id="url1" class="input tips" value="{{ $update->logo }}"
+                        <input type="text" id="url1" class="input tips" value="{{ $res->image }}"
                                style="width:25%; float:left;" value=""
                                data-toggle="hover" data-place="right" data-image=""/>
                         <input type="button" class="button bg-blue margin-left" id="image1" value="+ 点击上传"
@@ -273,16 +273,16 @@
                         $(data).each(function (k, v) {
                             html += '<div class="form-group"><div class="label">';
                             // 如果这个属性类型是可选的就有一个+
-                            if (v.attribute_type == 2) {
+                            if (v.attr_type == 2) {
                                 html += '<a onclick="addNewAttr(this);" href="#">[+] </a>';
                             }
                             // 属性名称
-                            html += '<label>' + v.attribute_name + '：</label></div>';
+                            html += '<label>' + v.attr_name + '：</label></div>';
                             // 如果属性有可选值就做下拉框，否则做文本框
                             if (v.option_values == null) {
-                                html += '<div class="field"><input type="text" class="input w50" name="attribute_value[' + v.id + '][]" data-validate="required:请选择品牌" /><div class="tips"></div></div></div>';
+                                html += '<div class="field"><input type="text" class="input w50" name="attr_value[' + v.id + '][]" data-validate="required:请选择品牌" /><div class="tips"></div></div></div>';
                             } else {
-                                html += '<div class="field"><select name="attribute_value[' + v.id + '][]" class="input w50" data-validate="required:请选择' + v.attribute_name + '"><option value="">请选择' + v.attribute_name + '</option>';
+                                html += '<div class="field"><select name="attr_value[' + v.id + '][]" class="input w50" data-validate="required:请选择' + v.attr_name + '"><option value="">请选择' + v.attr_name + '</option>';
                                 // 把可选值根据,转化成数组
                                 var _attr = v.option_values.split(',');
                                 // 循环每个值制作option
@@ -349,7 +349,7 @@
                         $.ajax({
                             type: 'post',
                             url: '{{ url('goods/deleteGoodsAttr') }}',
-                            data: {_token:token, goods_attr_id:goods_attr_id, goods_id:'{{ $update->id }}'},
+                            data: {_token:token, goods_attr_id:goods_attr_id, goods_id:'{{ $res->id }}'},
                             success: function (data) {
                                 // 再将页面中的记录删除
                                 html.remove();

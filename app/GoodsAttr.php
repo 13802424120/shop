@@ -22,7 +22,7 @@ class GoodsAttr extends Model
             // 属性值数组去重
             $val = array_unique($val);
             foreach ($val as $v) {
-                GoodsAttr::insert(['attribute_value' => $v, 'attribute_id' => $k, 'goods_id' => $goods_id]);
+                GoodsAttr::insert(['attr_value' => $v, 'attr_id' => $k, 'goods_id' => $goods_id]);
             }
         }
     }
@@ -35,15 +35,15 @@ class GoodsAttr extends Model
     {
         $goods_id = $attribute_data['id'];
         $goods_attr_id = $attribute_data['goods_attr_id'];
-        $attr_value = $attribute_data['attribute_value'];
+        $attr_value = $attribute_data['attr_value'];
         $i = 0;
         foreach ($attr_value as $k => $val) {
             foreach ($val as $v) {
                 if ($goods_attr_id[$i] == '') {
-                    GoodsAttr::insert(['attribute_value' => $v, 'attribute_id' => $k, 'goods_id' => $goods_id]);
+                    GoodsAttr::insert(['attr_value' => $v, 'attr_id' => $k, 'goods_id' => $goods_id]);
                 } else {
                     GoodsAttr::where('id', $goods_attr_id[$i])
-                        ->update(['attribute_value' => $v]);
+                        ->update(['attr_value' => $v]);
                 }
                 $i++;
             }

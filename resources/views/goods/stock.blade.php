@@ -21,15 +21,15 @@
                 <tr>
                     @foreach ($goods_attr_data as $key => $val)
                         <td>
-                            <select name="goods_attribute_id[]" class="input w50" style="width: 100%;" data-validate="required:请选择{{$key}}">
+                            <select name="goods_attr_id[]" class="input w50" style="width: 100%;" data-validate="required:请选择{{$key}}">
                                 <option value="">请选择{{$key}}</option>
                                 @foreach ($val as $v)
                                     <option value="{{$v->id}}"
-                                    @php $attr = explode(',', $cost['goods_attribute_id']) @endphp
+                                    @php $attr = explode(',', $cost['goods_attr_id']) @endphp
                                         @if (in_array($v->id, $attr))
                                             selected="selected"
                                         @endif
-                                    >{{ $v->attribute_value }}</option>
+                                    >{{ $v->attr_value }}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -43,10 +43,10 @@
                 <tr>
                     @foreach ($goods_attr_data as $key => $val)
                         <td>
-                            <select name="goods_attribute_id[]" class="input w50" style="width: 100%;" data-validate="required:请选择{{$key}}">
+                            <select name="goods_attr_id[]" class="input w50" style="width: 100%;" data-validate="required:请选择{{$key}}">
                                 <option value="">请选择{{$key}}</option>
                                 @foreach ($val as $v)
-                                    <option value="{{$v->id}}">{{ $v->attribute_value }}</option>
+                                    <option value="{{$v->id}}">{{ $v->attr_value }}</option>
                                 @endforeach
                             </select>
                         </td>

@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
     public function index(Request $request)
     {
-        $captcha = captcha_src();
         if ($request->isMethod('post')) {
             $code = mb_strtolower($request->code, 'UTF-8');
-            $data = $request->session()->get('captcha');
-            if ($code == $data['code']) {
+            $captcha = $request->session()->get('captcha.code');
+            if ($code == $captcha) {
                 $odds['username'] = $request->username;
                 $odds['password'] = md5($request->password);
                 $res = Admin::where($odds)->get();
@@ -29,7 +26,7 @@ class LoginController extends Controller
                 echo "<script>alert('验证码不正确！');</script>";
             }
         }
-        return view('login.index', ['captcha' => $captcha]);
+        return view('login.index', ['captcha' => captcha_src()]);
     }
 
     /**

@@ -11,6 +11,8 @@ class Attribute extends Model
      */
     public $timestamps = false;
 
+    protected $fillable = ['attr_name', 'attr_type', 'option_values', 'type_id'];
+
     /**
      * 删除类型关联属性
      * @param $type_id

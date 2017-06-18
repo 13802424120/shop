@@ -15,10 +15,10 @@ class AttributeController extends Controller
     public function lst(Request $request)
     {
         $code = $request->code;
-        $attribute_data = Attribute::where('type_id', $code)->get();
+        $attr_data = Attribute::where('type_id', $code)->get();
         $type_data = Type::find($code);
         return view('attribute.lst',
-            ['attribute_data' => $attribute_data, 'type_data' => $type_data]);
+            ['attr_data' => $attr_data, 'type_data' => $type_data]);
     }
 
     /**
@@ -30,14 +30,10 @@ class AttributeController extends Controller
     {
         $code = $request->code;
         if ($request->isMethod('post')) {
-            $attribute = new Attribute();
-            $attribute->attribute_name = $request->attribute_name;
-            $attribute->attribute_type = $request->attribute_type;
             if ($request->has('option_values')) {
-                $attribute->option_values = $request->option_values;
+                $request['option_values'] = $request->option_values;
             }
-            $attribute->type_id = $request->type_id;
-            if ($attribute->save()) {
+            if (Attribute::create($request->all())) {
                 return redirect('attribute?code=' . $code);
             }
         }
@@ -54,20 +50,17 @@ class AttributeController extends Controller
     {
         $id = $request->id;
         $code = $request->code;
-        $update = Attribute::find($id);
+        $res = Attribute::find($id);
         if ($request->isMethod('post')) {
-            $update->attribute_name = $request->attribute_name;
-            $update->attribute_type = $request->attribute_type;
             if ($request->has('option_values')) {
-                $update->option_values = $request->option_values;
+                $request['option_values'] = $request->option_values;
             }
-            $update->type_id = $request->type_id;
-            if ($update->save()) {
+            if ($res->update($request->all())) {
                 return redirect('attribute?code=' . $code);
             }
         }
         $type_data = Type::find($code);
-        return view('attribute/edit', ['update' => $update, 'type_data' => $type_data]);
+        return view('attribute/edit', ['res' => $res, 'type_data' => $type_data]);
     }
 
     /**

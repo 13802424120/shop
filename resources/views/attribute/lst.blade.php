@@ -29,13 +29,13 @@
                 <th>所属类型</th>
                 <th>操作</th>
             </tr>
-            @foreach ($attribute_data as $v)
+            @foreach ($attr_data as $v)
                 <tr>
                     <td><input type="checkbox" name="id[]" value="{{ $v->id }}"/>
                         {{ $v->id }}
                     </td>
-                    <td>{{ $v->attribute_name }}</td>
-                    <td>@if ($v->attribute_type == 1) 唯一 @else 可选 @endif</td>
+                    <td>{{ $v->attr_name }}</td>
+                    <td>@if ($v->attr_type == 1) 唯一 @else 可选 @endif</td>
                     <td>{{ $v->option_values }}</td>
                     <td>{{ $type_data->type_name }}</td>
                     <td>

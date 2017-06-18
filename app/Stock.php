@@ -20,8 +20,8 @@ class Stock extends Model
         $goods_id = $stocks_data['id'];
         $stock = $stocks_data['stock'];
         $price = $stocks_data['price'];
-        if (!empty($stocks_data['goods_attribute_id'])) {
-            $goods_attr_id = $stocks_data['goods_attribute_id'];
+        if (!empty($stocks_data['goods_attr_id'])) {
+            $goods_attr_id = $stocks_data['goods_attr_id'];
             // 先计算商品属性id和库存量的比例
             $attr_count = count($goods_attr_id);
             $stock_count = count($stock);
@@ -48,7 +48,7 @@ class Stock extends Model
                 ['goods_id' => $goods_id,
                     'stock' => $val,
                     'price' => $price[$k],
-                    'goods_attribute_id' => $goods_attribute_id
+                    'goods_attr_id' => $goods_attribute_id
                 ]
             );
         }

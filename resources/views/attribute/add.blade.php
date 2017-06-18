@@ -10,7 +10,7 @@
                     <label>属性名称：</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="attribute_name" data-validate="required:请输入商品名称"/>
+                    <input type="text" class="input w50" name="attr_name" data-validate="required:请输入商品名称"/>
                     <div class="tips"></div>
                 </div>
             </div>
@@ -30,8 +30,8 @@
                     <label>属性类型：</label>
                 </div>
                 <div class="field" style="padding-top:8px;">
-                    唯一 <input id="ishome" type="radio" name="attribute_type" value="1" checked="checked"/>
-                    可选 <input id="isvouch" type="radio" name="attribute_type" value="2"/>
+                    唯一 <input id="ishome" type="radio" name="attr_type" value="1" checked="checked"/>
+                    可选 <input id="isvouch" type="radio" name="attr_type" value="2"/>
                 </div>
             </div>
             <div class="form-group">
