@@ -25,15 +25,9 @@ class SortController extends Controller
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
-            $parent_id = 0;
-            if ($request->has('parent_id')) {
-                $parent_id = $request->parent_id;
-            }
-
-            $sort = new Sort;
-            $sort->sort_name = $request->sort_name;
-            $sort->parent_id = $parent_id;
-            if ($sort->save()) {
+            $request['parent_id'] = $request->has('parent_id') ? $request->parent_id : 0;
+            $res = Sort::create($request->all());
+            if ($res) {
                 return redirect('sort');
             };
         }

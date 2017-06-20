@@ -25,13 +25,12 @@ class BrandController extends Controller
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
-            $brand = new Brand();
-            $brand->brand_name = $request->brand_name;
             if ($request->hasFile('photo')) {
                 $path = $request->photo->store('photo');
-                $brand->logo = $path;
+                $request['logo'] = $path;
             }
-            if ($brand->save()) {
+            $res = Brand::create($request->all());
+            if ($res) {
                 return redirect('brand');
             }
         }
@@ -46,18 +45,17 @@ class BrandController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $update = Brand::find($id);
+        $res = Brand::find($id);
         if ($request->isMethod('post')) {
-            $update->brand_name = $request->brand_name;
             if ($request->hasFile('photo')) {
                 $path = $request->photo->store('photo');
-                $update->logo = $path;
+                $request['logo'] = $path;
             }
-            if ($update->save()) {
+            if ($res->update($request->all())) {
                 return redirect('brand');
             }
         }
-        return view('brand/edit', ['update' => $update]);
+        return view('brand/edit', ['res' => $res]);
     }
 
     /**

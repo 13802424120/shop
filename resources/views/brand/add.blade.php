@@ -26,22 +26,11 @@
                     <input type="file" name="photo" id="image2" style="display:none;">
                     <div class="tipss">图片尺寸：500*500</div>
                 </div>
+                <div class="label">
+                    <label></label>
+                </div>
+                <img src="" style="display:none;width: 100px;"/>
             </div>
-            <img src=""/>
-            <script>
-                $("#image1").click(function () {
-                    $("#image2").click();
-                    $("#image2").change(function () {
-                        var cost = $("#image2").val();
-                        $("#url1").val(cost);
-                        //图片上传实时预览
-                        var fileObj = document.getElementById("image2");
-                        var src = window.URL.createObjectURL(fileObj.files[0]);
-                        $("img").attr('src',src);
-                    });
-                });
-
-            </script>
             <div class="form-group">
                 <div class="label">
                     <label></label>
@@ -53,4 +42,19 @@
         </form>
     </div>
 </div>
+<script>
+    /******** 上传图片实时显示 *******/
+    $("#image1").click(function () {
+        $("#image2").click();
+        $("#image2").change(function () {
+            var cost = $("#image2").val();
+            $("#url1").val(cost);
+            //图片上传实时预览
+            var fileObj = document.getElementById("image2");
+            var src = window.URL.createObjectURL(fileObj.files[0]);
+            $("img").show();
+            $("img").attr('src', src);
+        });
+    });
+</script>
 @endsection

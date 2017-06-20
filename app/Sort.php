@@ -12,6 +12,11 @@ class Sort extends Model
     public $timestamps = false;
 
     /**
+     * @var array
+     */
+    protected $fillable = ['sort_name', 'parent_id'];
+
+    /**
      * @return array
      */
     public static function getData()
@@ -21,6 +26,7 @@ class Sort extends Model
     }
 
     /**
+     * // 递归分类
      * @param $data
      * @param int $pid
      * @param int $level

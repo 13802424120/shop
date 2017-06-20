@@ -31,11 +31,11 @@ class GoodsAttr extends Model
      * 修改商品属性
      * @param $attribute_data
      */
-    public static function modifyGoodsAttr($attribute_data)
+    public static function modifyGoodsAttr($attr_data)
     {
-        $goods_id = $attribute_data['id'];
-        $goods_attr_id = $attribute_data['goods_attr_id'];
-        $attr_value = $attribute_data['attr_value'];
+        $goods_id = $attr_data['id'];
+        $goods_attr_id = $attr_data['goods_attr_id'];
+        $attr_value = $attr_data['attr_value'];
         $i = 0;
         foreach ($attr_value as $k => $val) {
             foreach ($val as $v) {

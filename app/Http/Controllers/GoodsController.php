@@ -41,19 +41,16 @@ class GoodsController extends Controller
     {
         if ($request->isMethod('post')) {
             // 上传图片
-            if ($request->hasFile('photo')) {
-                $path = $request->photo->store('photo');
-                $request['image'] = $path;
-            }
+            $request['image'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
             $res = Goods::create($request->all());
             if ($res) {
                 $goods_id = $res->id;
                 // 添加商品扩展分类
-                if ($request->has('extend_sort_id')) {
-                    $extend_sort_id = $request->extend_sort_id;
+                $extend_sort_id = $request->extend_sort_id;
+                if (count($extend_sort_id) > 1) {
                     ExtendSort::insertExtendSort($goods_id, $extend_sort_id);
                 }
-                $attr_value = $request->attribute_value;
+                $attr_value = $request->attr_value;
                 // 添加商品属性
                 GoodsAttr::insertGoodsAttr($goods_id, $attr_value);
                 return redirect('goods');
@@ -81,16 +78,18 @@ class GoodsController extends Controller
         $res = Goods::find($id);
         if ($request->isMethod('post')) {
             // 上传图片
+            $request['image'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
             if ($request->hasFile('photo')) {
                 $path = $request->photo->store('photo');
                 $request['image'] = $path;
             }
             if ($res->update($request->all())) {
                 // 修改商品扩展分类
-                if ($request->has('extend_sort_id')) {
+                $extend_sort_id = $request->extend_sort_id;
+                if (count($extend_sort_id) > 1) {
                     // 先删除原扩展分类数据
                     ExtendSort::where('goods_id', $id)->delete();
-                    $extend_sort_id = $request->extend_sort_id;
+                    // 再添加新扩展分类数据
                     ExtendSort::insertExtendSort($id, $extend_sort_id);
                 }
                 // 修改商品属性
@@ -103,7 +102,11 @@ class GoodsController extends Controller
         $extend_sort_data = ExtendSort::where('goods_id', $id)->pluck('sort_id')->toArray();
         $type_data = Type::all();
         // 取出当前类型下所有的属性
-        $attr_data = DB::select('SELECT `a`.`id` attrs_id, `a`.`attr_name`, `a`.`attr_type`, `a`.`option_values`, `b`.`attr_value`, `b`.`id` FROM `attributes` AS `a` LEFT JOIN `goods_attrs` AS `b` ON (`a`.`id` = `b`.`attr_id` AND `b`.`goods_id` = ?) WHERE `type_id` = ? ORDER BY b.attr_id ASC', [$id, $res->type_id]);
+        $attr_data = DB::table('attributes as a')
+            ->select('a.id as attr_id', 'a.attr_name', 'a.attr_type', 'a.option_values', 'b.attr_value', 'b.id')
+            ->leftJoin('goods_attrs as b', ['a.id' => 'b.attr_id', 'b.goods_id' => DB::raw($id)])
+            ->where('type_id', $res->type_id)
+            ->get();
         return view('goods.edit',
             ['res' => $res,
                 'brand_data' => $brand_data,
@@ -168,14 +171,14 @@ class GoodsController extends Controller
         }
 
         // 根据商品id取出这件商品所有可选属性
-        $attribute_data = DB::table('goods_attrs as a')
+        $attr_data = DB::table('goods_attrs as a')
             ->select('a.id', 'a.attr_value', 'b.attr_name', 'b.attr_type')
             ->leftJoin('attributes as b', 'a.attr_id', 'b.id')
             ->where(['a.goods_id' => $id, 'b.attr_type' => 2])
             ->get();
         // 处理二维数组转成三维数组，将属性相同的放在一起
         $goods_attr_data = [];
-        foreach ($attribute_data as $v) {
+        foreach ($attr_data as $v) {
             $goods_attr_data[$v->attr_name][] = $v;
         }
         return view('goods.stock',

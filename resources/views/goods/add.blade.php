@@ -59,8 +59,8 @@
                             <label>扩展分类：</label>
                         </div>
                         <div class="field">
-                            <select name="extend_sort_id[]" class="input w50" data-validate="required:请选择分类">
-                                <option>请选择分类</option>
+                            <select name="extend_sort_id[]" class="input w50">
+                                <option value="">请选择分类</option>
                                 @foreach ($sort_data as $v)
                                     <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                                 @endforeach

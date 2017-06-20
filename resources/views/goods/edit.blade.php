@@ -146,11 +146,11 @@
                             <div class="label">
                                 @if ($v1->attr_type == 2)
                                     {{-- 判断如果属性ID首次出现就是+,否则是- --}}
-                                    @if (in_array($v1->attrs_id, $attr_id))
+                                    @if (in_array($v1->attr_id, $attr_id))
                                         @php $opt = '-' @endphp
                                     @else
                                         @php $opt = '+' @endphp
-                                        @php $attr_id[] = $v1->attrs_id @endphp
+                                        @php $attr_id[] = $v1->attr_id @endphp
                                     @endif
                                     <a onclick="addNewAttr(this);" href="#">[{{ $opt }}] </a>
                                 @endif
@@ -158,12 +158,12 @@
                             </div>
                             @if ($v1->option_values == null)
                                 <div class="field">
-                                    <input type="text" class="input w50" name="attr_value[{{$v1->attrs_id}}][]" value="{{$v1->attr_value}}" data-validate="required:请输入{{$v1->attr_name}}"/>
+                                    <input type="text" class="input w50" name="attr_value[{{$v1->attr_id}}][]" value="{{$v1->attr_value}}" data-validate="required:请输入{{$v1->attr_name}}"/>
                                     <div class="tips"></div>
                                 </div>
                             @else
                                 <div class="field">
-                                    <select name="attr_value[{{$v1->attrs_id}}][]" class="input w50" data-validate="required:请选择{{$v1->attr_name}}">
+                                    <select name="attr_value[{{$v1->attr_id}}][]" class="input w50" data-validate="required:请选择{{$v1->attr_name}}">
                                         <option value="">请选择{{$v1->attr_name}}</option>
                                         @php $attr = explode(',', $v1->option_values) @endphp
                                         @foreach ($attr as $v2)
