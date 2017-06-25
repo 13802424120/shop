@@ -17,7 +17,7 @@ class Attribute extends Model
      * 删除类型关联属性
      * @param $type_id
      */
-    public static function deleteTypeAttribute($type_id)
+    public static function delTypeAttribute($type_id)
     {
         if (is_array($type_id)) {
             $data = Attribute::whereIn('type_id', $type_id)->get();

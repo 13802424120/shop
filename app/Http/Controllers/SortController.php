@@ -28,7 +28,7 @@ class SortController extends Controller
             $request['parent_id'] = $request->has('parent_id') ? $request->parent_id : 0;
             $res = Sort::create($request->all());
             if ($res) {
-                return redirect('sort');
+                return redirect('sort/lst');
             };
         }
 
@@ -53,7 +53,7 @@ class SortController extends Controller
             $update->parent_id = $request->parent_id;
             $update->sort_name = $request->sort_name;
             if ($update->save()) {
-                return redirect('sort');
+                return redirect('sort/lst');
             };
         }
 
@@ -66,16 +66,14 @@ class SortController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function delete(Request $request)
+    public function del(Request $request)
     {
         $id = $request->id;
         $data = Sort::where('parent_id', $id)->get();
         // 父分类下有子分类不允许删除
-        if ($data->first()) {
-            return redirect('sort');
+        if (!$data->first()) {
+            Sort::destroy($id);
         }
-        if (Sort::destroy($id)) {
-            return redirect('sort');
-        };
+        return redirect('sort/lst');
     }
 }

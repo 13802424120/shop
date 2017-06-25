@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <form method="post" action="{{ url('attribute/delete') . '?code=' . $type_data->id }}">
+    <form method="post" action="{{ url('attribute/del') . '?code=' . $type_data->id }}">
         {{ csrf_field() }}
         <div class="panel admin-panel">
             <div class="panel-head"><strong class="icon-reorder"> 属性列表</strong></div>
@@ -9,7 +9,7 @@
             <ul class="search">
                 <li>
                     <button type="button" class="button border-yellow"
-                            onclick="window.location.href='attribute/add?code={{$type_data->id}}'"><span
+                            onclick="window.location.href='add?code={{$type_data->id}}'"><span
                                 class="icon-plus-square-o"></span> 添加属性
                     </button>
                     <button type="button" class="button border-green" id="checkall"><span class="icon-check"></span> 全选
@@ -60,7 +60,7 @@
     <script type="text/javascript">
         function del(id, code) {
             if (confirm("您确定要删除吗?")) {
-                self.location = 'attribute/delete?id=' + id + '&code=' + code;
+                self.location = 'del?id=' + id + '&code=' + code;
             }
         }
 

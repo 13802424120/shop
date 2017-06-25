@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="field">
                                         <select name="extend_sort_id[]" class="input w50" data-validate="required:请选择分类">
-                                            <option>请选择分类</option>
+                                            <option value="">请选择分类</option>
                                             @foreach ($sort_data as $v)
                                                 <option value="{{ $v['id'] }}"
                                                     @if ($cost == $v['id'])
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="field">
                                     <select name="extend_sort_id[]" class="input w50" data-validate="required:请选择分类">
-                                        <option>请选择分类</option>
+                                        <option value="">请选择分类</option>
                                         @foreach ($sort_data as $v)
                                             <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                                         @endforeach
@@ -348,7 +348,7 @@
                     if (confirm('删除此属性会将关联库存量数据一并删除，你确定要删除吗？')) {
                         $.ajax({
                             type: 'post',
-                            url: '{{ url('goods/deleteGoodsAttr') }}',
+                            url: '{{ url('goods/delGoodsAttr') }}',
                             data: {_token:token, goods_attr_id:goods_attr_id, goods_id:'{{ $res->id }}'},
                             success: function (data) {
                                 // 再将页面中的记录删除

@@ -16,7 +16,7 @@
                             <option value="{{ $v['id'] }}"  @if ($v['id'] == $update['parent_id']) selected = "selected" @endif>{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                         @endforeach
                     </select>
-                    <div class="tips">不选择上级分类默认为一级分类</div>
+                    <div class="tipss">不选择上级分类默认为一级分类</div>
                 </div>
             </div>
             <div class="form-group">

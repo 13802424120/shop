@@ -30,8 +30,8 @@
                             <label>商品品牌：</label>
                         </div>
                         <div class="field">
-                            <select name="brand_id" class="input w50" data-validate="required:请选择品牌">
-                                <option>请选择品牌</option>
+                            <select name="brand_id" class="input w50" data-validate="required:请选择商品品牌">
+                                <option value="">请选择品牌</option>
                                 @foreach ($brand_data as $v)
                                     <option value="{{ $v->id }}">{{$v->brand_name }}</option>
                                 @endforeach
@@ -44,8 +44,8 @@
                             <label>主分类：</label>
                         </div>
                         <div class="field">
-                            <select name="sort_id" class="input w50" data-validate="required:请选择分类">
-                                <option>请选择分类</option>
+                            <select name="sort_id" class="input w50" data-validate="required:请选择主分类">
+                                <option value="">请选择分类</option>
                                 @foreach ($sort_data as $v)
                                     <option value="{{ $v['id'] }}">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                                 @endforeach

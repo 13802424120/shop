@@ -29,7 +29,7 @@ class ExtendSort extends Model
      * 删除商品扩展分类
      * @param $goods_id
      */
-    public static function deleteExtendSort($goods_id)
+    public static function delExtendSort($goods_id)
     {
         if (is_array($goods_id)) {
             ExtendSort::whereIn('goods_id', $goods_id)->delete();

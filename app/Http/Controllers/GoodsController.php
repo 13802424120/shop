@@ -53,7 +53,7 @@ class GoodsController extends Controller
                 $attr_value = $request->attr_value;
                 // 添加商品属性
                 GoodsAttr::insertGoodsAttr($goods_id, $attr_value);
-                return redirect('goods');
+                return redirect('goods/lst');
             }
         }
         $brand_data = Brand::all();
@@ -94,7 +94,7 @@ class GoodsController extends Controller
                 }
                 // 修改商品属性
                 GoodsAttr::modifyGoodsAttr($request->all());
-                return redirect('goods');
+                return redirect('goods/lst');
             }
         }
         $brand_data = Brand::all();
@@ -122,7 +122,7 @@ class GoodsController extends Controller
      * 删除商品属性
      * @param Request $request
      */
-    public function deleteGoodsAttr(Request $request)
+    public function delGoodsAttr(Request $request)
     {
         $goods_attr_id = $request->goods_attr_id;
         $goods_id = $request->goods_id;
@@ -136,17 +136,17 @@ class GoodsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function delete(Request $request)
+    public function del(Request $request)
     {
         $id = $request->id;
         // 删除扩展分类
-        ExtendSort::deleteExtendSort($id);
+        ExtendSort::delExtendSort($id);
         // 删除商品库存量
-        Stock::deleteStock($id);
+        Stock::delStock($id);
         // 删除商品属性
-        GoodsAttr::deleteGoodsAttr($id);
+        GoodsAttr::delGoodsAttr($id);
         if (Goods::destroy($id)) {
-            return redirect('goods');
+            return redirect('goods/lst');
         }
     }
 
@@ -167,7 +167,7 @@ class GoodsController extends Controller
             Stock::where('goods_id', $id)->delete();
             // 再添加新库存
             Stock::addStock($request->all());
-            return redirect('goods');
+            return redirect('goods/lst');
         }
 
         // 根据商品id取出这件商品所有可选属性

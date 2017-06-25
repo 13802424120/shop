@@ -25,13 +25,11 @@ class BrandController extends Controller
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
-            if ($request->hasFile('photo')) {
-                $path = $request->photo->store('photo');
-                $request['logo'] = $path;
-            }
+            // 上传图片
+            $request['logo'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
             $res = Brand::create($request->all());
             if ($res) {
-                return redirect('brand');
+                return redirect('brand/lst');
             }
         }
         return view('brand/add');
@@ -47,12 +45,10 @@ class BrandController extends Controller
         $id = $request->id;
         $res = Brand::find($id);
         if ($request->isMethod('post')) {
-            if ($request->hasFile('photo')) {
-                $path = $request->photo->store('photo');
-                $request['logo'] = $path;
-            }
+            // 上传图片
+            $request['logo'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
             if ($res->update($request->all())) {
-                return redirect('brand');
+                return redirect('brand/lst');
             }
         }
         return view('brand/edit', ['res' => $res]);
@@ -63,11 +59,11 @@ class BrandController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function delete(Request $request)
+    public function del(Request $request)
     {
         $id = $request->id;
         if (Brand::destroy($id)) {
-            return redirect('brand');
+            return redirect('brand/lst');
         }
     }
 }

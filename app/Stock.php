@@ -58,7 +58,7 @@ class Stock extends Model
      * 删除商品库存量
      * @param $goods_id
      */
-    public static function deleteStock($goods_id)
+    public static function delStock($goods_id)
     {
         if (is_array($goods_id)) {
             Stock::whereIn('goods_id', $goods_id)->delete();

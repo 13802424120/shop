@@ -2,69 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Attribute;
-use App\Type;
+use App\Permission;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class PermissionController extends Controller
 {
     /**
-     * 类型列表
+     * 权限列表
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
-        $type_data = Type::paginate(10);
-        return view('type/lst', ['type_data' => $type_data]);
+        $data = Permission::getData();
+        return view('permission/lst', ['data' => $data]);
     }
 
     /**
-     * 添加类型
+     * 添加权限
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
+
         if ($request->isMethod('post')) {
-            $type = new Type();
-            $type->type_name = $request->type_name;
-            if ($type->save()) {
-                return redirect('type/lst');
+            $res = Permission::create($request->all());
+            if ($res) {
+                return redirect('permission/lst');
             }
         }
-        return view('type.add');
+        $data = Permission::getData();
+        return view('permission/add', ['data' => $data]);
     }
 
     /**
-     * 修改类型
+     * 修改权限
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
         $id = $request->id;
-        $update = Type::find($id);
+        $res = Permission::find($id);
         if ($request->isMethod('post')) {
-            $update->type_name = $request->type_name;
-            if ($update->save()) {
-                return redirect('type/lst');
+            // 顶级分类不允许选择上级分类
+            if ($res->parent_id == 0 && $request->parent_id != 0) {
+                return redirect('permission/lst');
+            }
+            if ($res->update($request->all())) {
+                return redirect('permission/lst');
             }
         }
-        return view('type/edit', ['update' => $update]);
+        $data = Permission::getData();
+        return view('permission/edit', ['res' => $res, 'data' => $data]);
     }
 
     /**
-     * 删除类型
+     * 删除权限
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {
         $id = $request->id;
-        // 删除类型下的属性
-        Attribute::delTypeAttribute($id);
-        if (Type::destroy($id)) {
-            return redirect('type/lst');
+        if (Permission::destroy($id)) {
+            return redirect('permission/lst');
         }
     }
 }

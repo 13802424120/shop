@@ -34,7 +34,7 @@ class AttributeController extends Controller
                 $request['option_values'] = $request->option_values;
             }
             if (Attribute::create($request->all())) {
-                return redirect('attribute?code=' . $code);
+                return redirect('attribute/lst?code=' . $code);
             }
         }
         $type_data = Type::find($code);
@@ -56,7 +56,7 @@ class AttributeController extends Controller
                 $request['option_values'] = $request->option_values;
             }
             if ($res->update($request->all())) {
-                return redirect('attribute?code=' . $code);
+                return redirect('attribute/lst?code=' . $code);
             }
         }
         $type_data = Type::find($code);
@@ -68,12 +68,12 @@ class AttributeController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function delete(Request $request)
+    public function del(Request $request)
     {
         $id = $request->id;
         $code = $request->code;
         if (Attribute::destroy($id)) {
-            return redirect('attribute?code=' . $code);
+            return redirect('attribute/lst?code=' . $code);
         }
     }
 

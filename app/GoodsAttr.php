@@ -54,7 +54,7 @@ class GoodsAttr extends Model
      * 删除商品属性
      * @param $goods_id
      */
-    public static function deleteGoodsAttr($goods_id)
+    public static function delGoodsAttr($goods_id)
     {
         if (is_array($goods_id)) {
             $data = GoodsAttr::whereIn('goods_id', $goods_id)->get();

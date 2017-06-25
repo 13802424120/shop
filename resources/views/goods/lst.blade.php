@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<form method="post" action="{{ url('goods/delete') }}">
+<form method="post" action="{{ url('goods/del') }}">
     {{ csrf_field() }}
     <div class="panel admin-panel">
         <div class="panel-head"><strong class="icon-reorder"> 商品列表</strong></div>
@@ -8,7 +8,7 @@
     <div class="padding border-bottom">
         <ul class="search">
             <li>
-                <button type="button" class="button border-yellow" onclick="window.location.href='goods/add'"><span
+                <button type="button" class="button border-yellow" onclick="window.location.href='add'"><span
                             class="icon-plus-square-o"></span> 添加商品
                 </button>
                 <button type="button" class="button border-green" id="checkall"><span class="icon-check"></span> 全选
@@ -64,7 +64,7 @@
 
     function del(id) {
         if (confirm("您确定要删除吗?")) {
-            self.location = '/goods/delete?id='+id;
+            self.location = '/goods/del?id='+id;
         }
     }
 

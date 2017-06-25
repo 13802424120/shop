@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<form method="post" action="{{ url('type/delete') }}">
+<form method="post" action="{{ url('type/del') }}">
     {{ csrf_field() }}
     <div class="panel admin-panel">
         <div class="panel-head"><strong class="icon-reorder"> 类型列表</strong></div>
@@ -8,7 +8,7 @@
     <div class="padding border-bottom">
         <ul class="search">
             <li>
-                <button type="button" class="button border-yellow" onclick="window.location.href='type/add'"><span
+                <button type="button" class="button border-yellow" onclick="window.location.href='add'"><span
                             class="icon-plus-square-o"></span> 添加类型
                 </button>
                 <button type="button" class="button border-green" id="checkall"><span class="icon-check"></span> 全选
@@ -32,7 +32,7 @@
                 <td>
                     <div class="button-group">
                         <a type="button" class="button border-main"
-                           href="{{ url('attribute') . '?code=' . $v->id}}"><span
+                           href="{{ url('attribute/lst') . '?code=' . $v->id}}"><span
                                     class="icon-edit"></span>属性列表</a>
                         <a type="button" class="button border-main"
                            href="{{ url('type/edit') . '?id=' . $v->id}}"><span
@@ -54,7 +54,7 @@
 
     function del(id) {
         if (confirm("您确定要删除吗?")) {
-            self.location = 'type/delete?id='+id;
+            self.location = 'del?id='+id;
         }
     }
 

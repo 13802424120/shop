@@ -2,69 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Attribute;
-use App\Type;
+use App\Role;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class RoleController extends Controller
 {
     /**
-     * 类型列表
+     * 角色列表
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
-        $type_data = Type::paginate(10);
-        return view('type/lst', ['type_data' => $type_data]);
+        $data = Role::paginate(10);
+        return view('role/lst', ['data' => $data]);
     }
 
     /**
-     * 添加类型
+     * 添加角色
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
-            $type = new Type();
-            $type->type_name = $request->type_name;
-            if ($type->save()) {
-                return redirect('type/lst');
+            $res = Role::create($request->all());
+            if ($res) {
+                return redirect('role/lst');
             }
         }
-        return view('type.add');
+        return view('role/add');
     }
 
     /**
-     * 修改类型
+     * 修改角色
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
         $id = $request->id;
-        $update = Type::find($id);
+        $res = Role::find($id);
         if ($request->isMethod('post')) {
-            $update->type_name = $request->type_name;
-            if ($update->save()) {
-                return redirect('type/lst');
+            if ($res->update($request->all())) {
+                return redirect('role/lst');
             }
         }
-        return view('type/edit', ['update' => $update]);
+        return view('role/edit', ['res' => $res]);
     }
 
     /**
-     * 删除类型
+     * 删除角色
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {
         $id = $request->id;
-        // 删除类型下的属性
-        Attribute::delTypeAttribute($id);
-        if (Type::destroy($id)) {
-            return redirect('type/lst');
+        if (Role::destroy($id)) {
+            return redirect('role/lst');
         }
     }
 }

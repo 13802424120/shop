@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-<form method="post" action="{{ url('brand/del') }}">
+<form method="post" action="{{ url('role/del') }}">
     {{ csrf_field() }}
     <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 品牌列表</strong></div>
+        <div class="panel-head"><strong class="icon-reorder"> 角色列表</strong></div>
     </div>
     <div class="padding border-bottom">
         <ul class="search">
             <li>
                 <button type="button" class="button border-yellow" onclick="window.location.href='add'"><span
-                            class="icon-plus-square-o"></span> 添加品牌
+                            class="icon-plus-square-o"></span> 添加角色
                 </button>
                 <button type="button" class="button border-green" id="checkall"><span class="icon-check"></span> 全选
                 </button>
@@ -20,19 +20,19 @@
     <table class="table table-hover text-center">
         <tr>
             <th width="120">ID</th>
-            <th>品牌名称</th>
+            <th>角色名称</th>
             <th>操作</th>
         </tr>
-        @foreach ($brand_data as $v)
+        @foreach ($data as $v)
             <tr>
                 <td><input type="checkbox" name="id[]" value="{{ $v->id }}"/>
                     {{ $v->id }}
                 </td>
-                <td>{{ $v->brand_name }}</td>
+                <td>{{ $v->role_name }}</td>
                 <td>
                     <div class="button-group">
                         <a type="button" class="button border-main"
-                           href="{{ url('brand/edit') . '?id=' . $v->id}}"><span
+                           href="{{ url('role/edit') . '?id=' . $v->id}}"><span
                                     class="icon-edit"></span>修改</a>
                         <a class="button border-red" href="javascript:void(0)" onclick="return del({{ $v->id }})"><span
                                     class="icon-trash-o"></span> 删除</a>
@@ -42,7 +42,7 @@
         @endforeach
         <tr>
             <td colspan="3">
-                {{ $brand_data->links() }}
+                {{ $data->links() }}
             </td>
         </tr>
     </table>
