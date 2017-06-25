@@ -44,7 +44,7 @@ class Stock extends Model
                 // 把取出来的商品属性id转换成字符串
                 $goods_attribute_id = implode(',', $attr_id);
             }
-            Stock::insert(
+            self::insert(
                 ['goods_id' => $goods_id,
                     'stock' => $val,
                     'price' => $price[$k],
@@ -61,9 +61,9 @@ class Stock extends Model
     public static function delStock($goods_id)
     {
         if (is_array($goods_id)) {
-            Stock::whereIn('goods_id', $goods_id)->delete();
+            self::whereIn('goods_id', $goods_id)->delete();
         } else {
-            Stock::where('goods_id', $goods_id)->delete();
+            self::where('goods_id', $goods_id)->delete();
         }
     }
 }

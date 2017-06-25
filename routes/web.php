@@ -116,7 +116,9 @@ Route::group(['middleware' => 'login'], function () {
 
 Route::group(['prefix' => 'login'], function () {
     // 后台登录
-    Route::any('/', 'loginController@index');
+    Route::get('/', 'loginController@index');
+    // 验证登录
+    Route::post('checkLogin', 'loginController@checkLogin');
     // 退出登录
     Route::get('logout', 'loginController@logout');
 });

@@ -22,7 +22,7 @@ class GoodsAttr extends Model
             // 属性值数组去重
             $val = array_unique($val);
             foreach ($val as $v) {
-                GoodsAttr::insert(['attr_value' => $v, 'attr_id' => $k, 'goods_id' => $goods_id]);
+                self::insert(['attr_value' => $v, 'attr_id' => $k, 'goods_id' => $goods_id]);
             }
         }
     }
@@ -40,9 +40,9 @@ class GoodsAttr extends Model
         foreach ($attr_value as $k => $val) {
             foreach ($val as $v) {
                 if ($goods_attr_id[$i] == '') {
-                    GoodsAttr::insert(['attr_value' => $v, 'attr_id' => $k, 'goods_id' => $goods_id]);
+                    self::insert(['attr_value' => $v, 'attr_id' => $k, 'goods_id' => $goods_id]);
                 } else {
-                    GoodsAttr::where('id', $goods_attr_id[$i])
+                    self::where('id', $goods_attr_id[$i])
                         ->update(['attr_value' => $v]);
                 }
                 $i++;
@@ -57,15 +57,15 @@ class GoodsAttr extends Model
     public static function delGoodsAttr($goods_id)
     {
         if (is_array($goods_id)) {
-            $data = GoodsAttr::whereIn('goods_id', $goods_id)->get();
+            $data = self::whereIn('goods_id', $goods_id)->get();
             if ($data->first()) {
-                GoodsAttr::whereIn('goods_id', $goods_id)->delete();
+                self::whereIn('goods_id', $goods_id)->delete();
             }
 
         } else {
-            $data = GoodsAttr::where('goods_id', $goods_id)->get();
+            $data = self::where('goods_id', $goods_id)->get();
             if ($data->first()) {
-                GoodsAttr::where('goods_id', $goods_id)->delete();
+                self::where('goods_id', $goods_id)->delete();
             }
         }
 

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-06-19 02:21:38
+Date: 2017-06-25 23:04:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,12 +27,31 @@ CREATE TABLE `admins` (
   `updated_at` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 -- ----------------------------
 -- Records of admins
 -- ----------------------------
 INSERT INTO `admins` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '2017-06-18 16:09:31', '2017-06-18 16:09:35');
+INSERT INTO `admins` VALUES ('4', 'user1', 'e10adc3949ba59abbe56e057f20f883e', '2017-06-25 17:22:45', '2017-06-25 17:22:45');
+
+-- ----------------------------
+-- Table structure for admin_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_roles`;
+CREATE TABLE `admin_roles` (
+  `admin_id` int(11) NOT NULL COMMENT '管理员id',
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  KEY `admin_id` (`admin_id`),
+  KEY `role_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员角色表';
+
+-- ----------------------------
+-- Records of admin_roles
+-- ----------------------------
+INSERT INTO `admin_roles` VALUES ('4', '5');
+INSERT INTO `admin_roles` VALUES ('4', '6');
+INSERT INTO `admin_roles` VALUES ('4', '7');
 
 -- ----------------------------
 -- Table structure for attributes
@@ -46,7 +65,7 @@ CREATE TABLE `attributes` (
   `type_id` int(11) NOT NULL COMMENT '所属类型id',
   PRIMARY KEY (`id`),
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COMMENT='属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='属性表';
 
 -- ----------------------------
 -- Records of attributes
@@ -65,7 +84,6 @@ INSERT INTO `attributes` VALUES ('40', '颜色', '2', '红色,蓝色,白色', '1
 INSERT INTO `attributes` VALUES ('41', '材质', '1', null, '16');
 INSERT INTO `attributes` VALUES ('42', '重量', '1', null, '16');
 INSERT INTO `attributes` VALUES ('43', '重量', '1', null, '15');
-INSERT INTO `attributes` VALUES ('44', '啦啦啦', '2', '哼哼,哈哈', '15');
 
 -- ----------------------------
 -- Table structure for brands
@@ -77,16 +95,15 @@ CREATE TABLE `brands` (
   `logo` varchar(255) DEFAULT NULL COMMENT '品牌logo',
   PRIMARY KEY (`id`),
   KEY `brand_name` (`brand_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='品牌表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='品牌表';
 
 -- ----------------------------
 -- Records of brands
 -- ----------------------------
-INSERT INTO `brands` VALUES ('4', '苹果', 'photo/NhwqktTWFFDodTSBQbSu9n5AXneUWtZySRtekpIK.jpeg');
-INSERT INTO `brands` VALUES ('5', '三星', 'photo/0CCwWiTeFgPRCfcVYYoyn1BSkl0cJIF2z5ca9phV.jpeg');
 INSERT INTO `brands` VALUES ('7', '美的', 'photo/1xu4J4DIprKgR8fhQvrHwsYI1PdAZSt9GCi3bWNy.jpeg');
 INSERT INTO `brands` VALUES ('8', '红双喜', 'photo/DaUqm6cQBIZx50EoZ7WVBJRuTmzoXfaQt3lUkpLR.jpeg');
 INSERT INTO `brands` VALUES ('9', '海澜之家', null);
+INSERT INTO `brands` VALUES ('10', '苹果', null);
 
 -- ----------------------------
 -- Table structure for extend_sorts
@@ -104,13 +121,12 @@ CREATE TABLE `extend_sorts` (
 -- ----------------------------
 INSERT INTO `extend_sorts` VALUES ('12', '37');
 INSERT INTO `extend_sorts` VALUES ('13', '37');
-INSERT INTO `extend_sorts` VALUES ('26', '34');
-INSERT INTO `extend_sorts` VALUES ('27', '34');
 INSERT INTO `extend_sorts` VALUES ('10', '44');
 INSERT INTO `extend_sorts` VALUES ('22', '44');
-INSERT INTO `extend_sorts` VALUES ('7', '45');
-INSERT INTO `extend_sorts` VALUES ('20', '45');
-INSERT INTO `extend_sorts` VALUES ('30', '50');
+INSERT INTO `extend_sorts` VALUES ('26', '34');
+INSERT INTO `extend_sorts` VALUES ('27', '34');
+INSERT INTO `extend_sorts` VALUES ('7', '46');
+INSERT INTO `extend_sorts` VALUES ('20', '46');
 
 -- ----------------------------
 -- Table structure for goods
@@ -132,16 +148,15 @@ CREATE TABLE `goods` (
   KEY `describe` (`describe`) USING BTREE,
   KEY `sore_id` (`sort_id`) USING BTREE,
   KEY `type_id` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('34', 'iphone7', '4', null, '<p>iphone7</p>', '28', '1', '13', '2017-05-29 18:49:12', '2017-05-29 18:49:12');
+INSERT INTO `goods` VALUES ('34', 'iphone7', '10', null, '<p>iphone7</p>', '28', '1', '13', '2017-05-29 18:49:12', '2017-06-24 22:14:39');
 INSERT INTO `goods` VALUES ('37', '羽毛球拍子', '8', null, '<p>羽毛球拍子一支</p>', '29', '1', '16', '2017-06-10 16:59:54', '2017-06-10 16:59:54');
 INSERT INTO `goods` VALUES ('44', '衬衫', '9', null, '<p>衬衫</p>', '9', '1', '14', '2017-06-11 20:43:15', '2017-06-11 20:43:15');
-INSERT INTO `goods` VALUES ('45', '电风扇', '7', null, '<p>电风扇</p>', '1', '1', '15', '2017-06-11 20:43:59', '2017-06-11 20:43:59');
-INSERT INTO `goods` VALUES ('50', '批量赋值', '8', 'photo/m6zsOTPLcJksNkcRcBEcGdHBTkPBNBcoggR3eQ4N.jpeg', '<p><span style=\"color: rgb(51, 51, 51); font-family: \">批量赋值</span></p>', '9', '1', '16', '2017-06-18 22:04:01', '2017-06-18 22:04:58');
+INSERT INTO `goods` VALUES ('46', '电风扇', '7', null, '<p>美的电风扇</p>', '1', '1', '15', '2017-06-25 17:33:18', '2017-06-25 17:33:18');
 
 -- ----------------------------
 -- Table structure for goods_attrs
@@ -155,7 +170,7 @@ CREATE TABLE `goods_attrs` (
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`attr_id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8 COMMENT='商品属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COMMENT='商品属性表';
 
 -- ----------------------------
 -- Records of goods_attrs
@@ -185,12 +200,90 @@ INSERT INTO `goods_attrs` VALUES ('153', '175', '36', '44');
 INSERT INTO `goods_attrs` VALUES ('154', '180', '36', '44');
 INSERT INTO `goods_attrs` VALUES ('155', '纯棉', '37', '44');
 INSERT INTO `goods_attrs` VALUES ('156', '青年', '38', '44');
-INSERT INTO `goods_attrs` VALUES ('157', '120g', '43', '45');
-INSERT INTO `goods_attrs` VALUES ('159', '100kg', '43', '50');
-INSERT INTO `goods_attrs` VALUES ('160', '红色', '40', '50');
-INSERT INTO `goods_attrs` VALUES ('163', '批量赋值', '41', '50');
-INSERT INTO `goods_attrs` VALUES ('164', '批量赋值', '42', '50');
-INSERT INTO `goods_attrs` VALUES ('167', '蓝色', '40', '50');
+INSERT INTO `goods_attrs` VALUES ('158', '125kg', '43', '46');
+
+-- ----------------------------
+-- Table structure for permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permission_name` varchar(255) NOT NULL COMMENT '权限名称',
+  `module_name` varchar(255) DEFAULT NULL COMMENT '模块名称',
+  `controller_name` varchar(255) DEFAULT NULL COMMENT '控制器名称',
+  `method_name` varchar(255) DEFAULT NULL COMMENT '方法名称',
+  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '上级权限id，0：顶级权限',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='权限表';
+
+-- ----------------------------
+-- Records of permissions
+-- ----------------------------
+INSERT INTO `permissions` VALUES ('1', '商品模块', null, null, null, '0');
+INSERT INTO `permissions` VALUES ('2', '商品列表', null, 'goods', 'lst', '1');
+INSERT INTO `permissions` VALUES ('3', '添加商品', null, 'goods', 'add', '2');
+INSERT INTO `permissions` VALUES ('7', '修改商品', null, 'goods', 'edit', '2');
+INSERT INTO `permissions` VALUES ('9', '删除商品', null, 'goods', 'del', '2');
+INSERT INTO `permissions` VALUES ('10', '权限模块', null, null, null, '0');
+INSERT INTO `permissions` VALUES ('11', '权限列表', null, 'permission', 'lst', '10');
+INSERT INTO `permissions` VALUES ('12', '添加权限', null, 'permissions', 'add', '11');
+INSERT INTO `permissions` VALUES ('13', '修改权限', null, 'permissions', 'edit', '11');
+INSERT INTO `permissions` VALUES ('14', '删除权限', null, 'permissions', 'del', '11');
+
+-- ----------------------------
+-- Table structure for roles
+-- ----------------------------
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `role_name` (`role_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='角色表';
+
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
+INSERT INTO `roles` VALUES ('5', '客服');
+INSERT INTO `roles` VALUES ('11', '测试角色权限');
+INSERT INTO `roles` VALUES ('6', '编辑');
+INSERT INTO `roles` VALUES ('7', '销售');
+
+-- ----------------------------
+-- Table structure for role_permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `role_permissions`;
+CREATE TABLE `role_permissions` (
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  `permission_id` int(11) NOT NULL COMMENT '权限id',
+  KEY `permission_id` (`permission_id`),
+  KEY `role_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表';
+
+-- ----------------------------
+-- Records of role_permissions
+-- ----------------------------
+INSERT INTO `role_permissions` VALUES ('11', '1');
+INSERT INTO `role_permissions` VALUES ('11', '2');
+INSERT INTO `role_permissions` VALUES ('11', '3');
+INSERT INTO `role_permissions` VALUES ('11', '7');
+INSERT INTO `role_permissions` VALUES ('11', '9');
+INSERT INTO `role_permissions` VALUES ('5', '1');
+INSERT INTO `role_permissions` VALUES ('5', '2');
+INSERT INTO `role_permissions` VALUES ('5', '9');
+INSERT INTO `role_permissions` VALUES ('6', '1');
+INSERT INTO `role_permissions` VALUES ('6', '2');
+INSERT INTO `role_permissions` VALUES ('6', '3');
+INSERT INTO `role_permissions` VALUES ('6', '7');
+INSERT INTO `role_permissions` VALUES ('6', '9');
+INSERT INTO `role_permissions` VALUES ('6', '10');
+INSERT INTO `role_permissions` VALUES ('6', '11');
+INSERT INTO `role_permissions` VALUES ('6', '12');
+INSERT INTO `role_permissions` VALUES ('6', '13');
+INSERT INTO `role_permissions` VALUES ('6', '14');
+INSERT INTO `role_permissions` VALUES ('7', '10');
+INSERT INTO `role_permissions` VALUES ('7', '11');
+INSERT INTO `role_permissions` VALUES ('7', '14');
 
 -- ----------------------------
 -- Table structure for sorts
@@ -217,7 +310,6 @@ INSERT INTO `sorts` VALUES ('20', '电风扇', '7');
 INSERT INTO `sorts` VALUES ('22', '长袖衬衫', '10');
 INSERT INTO `sorts` VALUES ('23', '运动服饰', '12');
 INSERT INTO `sorts` VALUES ('24', '乒乓球', '13');
-INSERT INTO `sorts` VALUES ('25', '篮球', '13');
 INSERT INTO `sorts` VALUES ('26', '手机数码', '0');
 INSERT INTO `sorts` VALUES ('27', '手机通讯', '26');
 INSERT INTO `sorts` VALUES ('28', '手机', '27');
@@ -245,7 +337,6 @@ INSERT INTO `stocks` VALUES ('34', '333', '79.00', '81,85');
 INSERT INTO `stocks` VALUES ('37', '1000', '69.00', '102');
 INSERT INTO `stocks` VALUES ('37', '955', '79.00', '103');
 INSERT INTO `stocks` VALUES ('37', '755', '89.00', '104');
-INSERT INTO `stocks` VALUES ('45', '599', '120.00', '');
 INSERT INTO `stocks` VALUES ('44', '1000', '399.00', '148,151');
 INSERT INTO `stocks` VALUES ('44', '900', '388.00', '148,152');
 INSERT INTO `stocks` VALUES ('44', '800', '377.00', '148,153');
@@ -255,8 +346,7 @@ INSERT INTO `stocks` VALUES ('44', '500', '344.00', '149,153');
 INSERT INTO `stocks` VALUES ('44', '400', '333.00', '150,152');
 INSERT INTO `stocks` VALUES ('44', '300', '322.00', '150,153');
 INSERT INTO `stocks` VALUES ('44', '300', '311.00', '150,154');
-INSERT INTO `stocks` VALUES ('50', '100', '100.00', '160');
-INSERT INTO `stocks` VALUES ('50', '200', '200.00', '167');
+INSERT INTO `stocks` VALUES ('46', '1000', '125.00', '');
 
 -- ----------------------------
 -- Table structure for types

@@ -7,26 +7,33 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->isMethod('post')) {
-            $code = mb_strtolower($request->code, 'UTF-8');
-            $captcha = $request->session()->get('captcha.code');
-            if ($code == $captcha) {
-                $odds['username'] = $request->username;
-                $odds['password'] = md5($request->password);
-                $res = Admin::where($odds)->get();
-                if ($res->first()) {
-                    $request->session()->put('state', 1);
-                    return redirect('/');
-                }
-                echo "<script>alert('用户名或密码不正确！');</script>";
-            } else {
-                $request->session()->put('state', 0);
-                echo "<script>alert('验证码不正确！');</script>";
+        $captcha = captcha_src();
+        return view('login.index', ['captcha' => $captcha]);
+    }
+
+    /**
+     * 登录验证
+     * @param Request $request
+     * @return string
+     */
+    public function checkLogin(Request $request)
+    {
+        $code = mb_strtolower($request->code, 'UTF-8');
+        $captcha = $request->session()->get('captcha.code');
+        if ($code == $captcha) {
+            $odds['username'] = $request->username;
+            $odds['password'] = md5($request->password);
+            $res = Admin::where($odds)->first();
+            if ($res) {
+                $request->session()->put('id', $res->id);
+                $request->session()->put('state', 1);
+                return json_encode(['code' => 1, 'message' =>'登录成功！']);
             }
+            return json_encode(['code' => 0, 'message' =>'用户名或密码不正确！']);
         }
-        return view('login.index', ['captcha' => captcha_src()]);
+        return json_encode(['code' => 0, 'message' =>'验证码不正确！']);
     }
 
     /**

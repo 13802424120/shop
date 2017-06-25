@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Permission;
 use App\Role;
+use App\RolePermission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -13,7 +16,12 @@ class RoleController extends Controller
      */
     public function lst()
     {
-        $data = Role::paginate(10);
+        $data = DB::table('roles as a')
+            ->select('a.id', 'a.role_name', DB::raw('GROUP_CONCAT(c.permission_name) as permission_name'))
+            ->leftJoin('role_permissions as b', 'a.id', 'b.role_id')
+            ->leftJoin('permissions as c', 'b.permission_id', 'c.id')
+            ->groupBy('a.id')
+            ->get();
         return view('role/lst', ['data' => $data]);
     }
 
@@ -27,10 +35,15 @@ class RoleController extends Controller
         if ($request->isMethod('post')) {
             $res = Role::create($request->all());
             if ($res) {
+                // 添加角色权限
+                $role_id = $res->id;
+                $permission_id = $request->permission_id;
+                RolePermission::insertRolePermission($role_id, $permission_id);
                 return redirect('role/lst');
             }
         }
-        return view('role/add');
+        $data = Permission::getData();
+        return view('role/add', ['data' => $data]);
     }
 
     /**
@@ -44,10 +57,20 @@ class RoleController extends Controller
         $res = Role::find($id);
         if ($request->isMethod('post')) {
             if ($res->update($request->all())) {
+                // 先删除原角色权限数据
+                RolePermission::where('role_id', $id)->delete();
+                // 再添加新角色权限数据
+                $permission_id = $request->permission_id;
+                RolePermission::insertRolePermission($id, $permission_id);
                 return redirect('role/lst');
             }
         }
-        return view('role/edit', ['res' => $res]);
+        $permission_data = Permission::getData();
+        $role_permission_data = RolePermission::where('role_id', $id)->pluck('permission_id')->toArray();
+        return view('role/edit', ['res' => $res,
+            'permission_data' => $permission_data,
+            'role_permission_data' => $role_permission_data
+        ]);
     }
 
     /**
@@ -59,6 +82,8 @@ class RoleController extends Controller
     {
         $id = $request->id;
         if (Role::destroy($id)) {
+            // 删除角色权限数据
+            RolePermission::where('role_id', $id)->delete();
             return redirect('role/lst');
         }
     }

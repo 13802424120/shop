@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Permission extends Model
 {
@@ -44,5 +46,24 @@ class Permission extends Model
             }
         }
         return $tree;
+    }
+
+    public static function checkPermission(Request $request)
+    {
+        // 超级管理员直接返回true
+        $admin_id = $request->session()->get('id');
+        if ($admin_id == 1) {
+            return true;
+        }
+        $odds['a.admin_id'] = $admin_id;
+        $odds['c.module_name'] = null;
+        $odds['c.controller_name'] = null;
+        $odds['c.method_name'] = null;
+        $data = DB::table('admin_roles as a')
+            ->leftJoin('role_permissions as b', 'b.role_id', 'a.role_id')
+            ->leftJoin('permissions as c', 'c.id', 'b.permission_id')
+            ->where($odds)
+            ->count();
+        return $data > 0;
     }
 }

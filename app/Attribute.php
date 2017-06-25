@@ -20,15 +20,15 @@ class Attribute extends Model
     public static function delTypeAttribute($type_id)
     {
         if (is_array($type_id)) {
-            $data = Attribute::whereIn('type_id', $type_id)->get();
+            $data = self::whereIn('type_id', $type_id)->get();
             if ($data->first()) {
-                Attribute::whereIn('type_id', $type_id)->delete();
+                self::whereIn('type_id', $type_id)->delete();
             }
 
         } else {
             $data = Attribute::where('type_id', $type_id)->get();
             if ($data->first()) {
-                GoodsAttr::where('type_id', $type_id)->delete();
+                self::where('type_id', $type_id)->delete();
             }
         }
 

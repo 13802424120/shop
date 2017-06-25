@@ -19,7 +19,7 @@ class AdminRole extends Model
     public static function insertAdminRole($admin_id, $role_id)
     {
         foreach ($role_id as $v) {
-            AdminRole::insert(['admin_id' => $admin_id,'role_id' => $v]);
+            self::insert(['admin_id' => $admin_id,'role_id' => $v]);
         }
     }
 }

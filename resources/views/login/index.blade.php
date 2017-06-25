@@ -32,10 +32,34 @@
                         </div>
                     </div>
                 </div>
-                <div style="padding:30px;"><input type="submit" class="button button-block bg-main text-big input-big" value="登录"></div>
+                <div style="padding:30px;"><input type="submit" onclick="return loginCheck();" class="button button-block bg-main text-big input-big" value="登录"></div>
             </div>
             </form>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function loginCheck() {
+        return false;
+    }
+
+    $("input[type=submit]").click(function () {
+        var _token = $("input[name=_token]").val();
+        var username = $("input[name=username]").val();
+        var password = $("input[name=password]").val();
+        var code = $("input[name=code]").val();
+        $.ajax({
+            type: "POST",
+            url: "{{ url('login/checkLogin')}}",
+            data: {_token: _token, username: username, password: password, code: code},
+            dataType: "json",
+            success: function (data) {
+                alert(data.message);
+                if (data.code == 1) {
+                    self.location = "{{ url('/') }}";
+                }
+            }
+        });
+    });
+</script>
 @endsection

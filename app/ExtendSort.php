@@ -21,7 +21,7 @@ class ExtendSort extends Model
         // 分类数据去重
         $extend_sort_data = array_unique($extend_sort_data);
         foreach ($extend_sort_data as $v) {
-            ExtendSort::insert(['sort_id' => $v, 'goods_id' => $goods_id]);
+            self::insert(['sort_id' => $v, 'goods_id' => $goods_id]);
         }
     }
 
@@ -32,9 +32,9 @@ class ExtendSort extends Model
     public static function delExtendSort($goods_id)
     {
         if (is_array($goods_id)) {
-            ExtendSort::whereIn('goods_id', $goods_id)->delete();
+            self::whereIn('goods_id', $goods_id)->delete();
         } else {
-            ExtendSort::where('goods_id', $goods_id)->delete();
+            self::where('goods_id', $goods_id)->delete();
         }
     }
 }
