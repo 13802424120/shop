@@ -27,7 +27,7 @@ class LoginController extends Controller
             $odds['password'] = md5($request->password);
             $res = Admin::where($odds)->first();
             if ($res) {
-                $request->session()->put('id', $res->id);
+                $request->session()->put('admin_id', $res->id);
                 $request->session()->put('state', 1);
                 return json_encode(['code' => 1, 'message' =>'登录成功！']);
             }

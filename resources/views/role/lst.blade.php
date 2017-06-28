@@ -23,7 +23,7 @@
                 <td>{{ $v->permission_name }}</td>
                 <td>
                     <div class="button-group">
-                        <a type="button" class="button border-main" href="{{ url('role/edit') . '?id=' . $v->id}}"><span
+                        <a type="button" class="button border-main" href="{{ url('role/edit') }}?id={{ $v->id }}"><span
                                     class="icon-edit"></span>修改</a>
                         <a class="button border-red" href="javascript:void(0)" onclick="return del({{ $v->id }})"><span
                                     class="icon-trash-o"></span>删除</a>

@@ -122,3 +122,10 @@ Route::group(['prefix' => 'login'], function () {
     // 退出登录
     Route::get('logout', 'loginController@logout');
 });
+
+Route::get('tips', function () {
+    return view('tips');
+});
+
+
+

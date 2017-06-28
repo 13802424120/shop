@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Permission;
 use Closure;
+use Illuminate\Http\Request;
 
 class Login
 {
@@ -17,7 +19,15 @@ class Login
     {
         $state = $request->session()->get('state');
         if ($state == 1) {
-            return $next($request);
+            $admin_id = $request->session()->get('admin_id');
+            $path = $request->path();
+            // 超级管理员直接返回true
+            if ($admin_id == 1 || $path == '/') {
+                return $next($request);
+            }
+            $arr = explode('/',$path);
+            $res = Permission::checkPermission($admin_id, $arr);
+            return $res ? $next($request) : redirect('tips')->with('status', '无权访问！');
         }
         return redirect('login');
     }

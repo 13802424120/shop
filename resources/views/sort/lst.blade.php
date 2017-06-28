@@ -21,7 +21,7 @@
                 <td style="text-align:left;padding-left: 20px;">{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</td>
                 <td>
                     <div class="button-group">
-                        <a class="button border-main" href="./sort/edit?id={{ $v['id'] }}">
+                        <a class="button border-main" href="{{ url('sort/edit') }}?id={{ $v['id'] }}">
                             <span class="icon-edit"></span> 修改</a>
                         <a class="button border-red" href="javascript:void(0)" onclick="return del({{ $v['id'] }})">
                             <span class="icon-trash-o"></span> 删除</a></div>
