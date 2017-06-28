@@ -21,7 +21,7 @@ class Login
         if ($state == 1) {
             $admin_id = $request->session()->get('admin_id');
             $path = $request->path();
-            // 超级管理员直接返回true
+            // 超级管理员直接通过
             if ($admin_id == 1 || $path == '/') {
                 return $next($request);
             }

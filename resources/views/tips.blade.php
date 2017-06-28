@@ -22,7 +22,7 @@ a{color:#0ae;}
         <span style="display:none;"><i class="icon-smile-o"></i>操作成功</span>
         <i class="icon-frown-o"></i>{{ session('status') }}
    </div>
-    {{--<h4 class="smaller">页面自动 <a id="href" href="#">跳转</a> 等待时间： <b id="wait">3</b></h4>--}}
+    <h4 class="smaller">页面自动 <a id="href" href="{{ url('info') }}">跳转</a> 等待时间： <b id="wait">3</b></h4>
    
 </div>
 

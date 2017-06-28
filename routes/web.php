@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'login'], function () {
     //首页
     Route::get('/', 'IndexController@index');
@@ -125,6 +121,10 @@ Route::group(['prefix' => 'login'], function () {
 
 Route::get('tips', function () {
     return view('tips');
+});
+
+Route::get('info', function () {
+    return view('welcome');
 });
 
 

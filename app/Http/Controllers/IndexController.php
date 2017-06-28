@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Permission;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('index.index');
+        $data = Permission::getAdminPermission($request);
+        return view('index.index', ['data' => $data]);
     }
 
 }

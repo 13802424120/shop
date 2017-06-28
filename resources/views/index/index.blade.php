@@ -19,19 +19,20 @@
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
-  <h2><span class="icon-shopping-cart"></span>商品管理</h2>
-  <ul style="display:block">
-    <li><a href="{{ url('brand/lst') }}" target="right"><span class="icon-caret-right"></span>品牌列表</a></li>
-    <li><a href="{{ url('sort/lst') }}" target="right"><span class="icon-caret-right"></span>分类列表</a></li>
-    <li><a href="{{ url('goods/lst') }}" target="right"><span class="icon-caret-right"></span>商品列表</a></li>
-    <li><a href="{{ url('type/lst') }}" target="right"><span class="icon-caret-right"></span>类型列表</a></li>
+  @foreach ($data as $val)
+    <h2><span class="
+    @if ($val->permission_name == '商品管理')
+        icon-shopping-cart
+    @elseif ($val->permission_name == '权限管理')
+        icon-user
+    @endif
+    "></span>{{ $val->permission_name }}</h2>
+    <ul style="display:block">
+    @foreach ($val->child as $v )
+        <li><a href="@php echo $v->controller_name . '/' . $v->method_name @endphp" target="right"><span class="icon-caret-right"></span>{{ $v->permission_name }}</a></li>
+    @endforeach
   </ul>
-  <h2><span class="icon-user"></span>权限管理</h2>
-  <ul style="display:block">
-    <li><a href="{{ url('permission/lst') }}" target="right"><span class="icon-caret-right"></span>权限列表</a></li>
-    <li><a href="{{ url('role/lst') }}" target="right"><span class="icon-caret-right"></span>角色列表</a></li>
-    <li><a href="{{ url('admin/lst') }}" target="right"><span class="icon-caret-right"></span>管理列表</a></li>
-  </ul>  
+  @endforeach
 </div>
 <script type="text/javascript">
 $(function(){
@@ -52,7 +53,7 @@ $(function(){
   <li><b>当前语言：</b><span style="color:red;">中文</span>
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="{{ url('brand/lst') }}" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" src="{{ url('info') }}" name="right" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

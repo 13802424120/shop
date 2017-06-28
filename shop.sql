@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-06-25 23:04:53
+Date: 2017-06-28 22:56:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,8 +50,6 @@ CREATE TABLE `admin_roles` (
 -- Records of admin_roles
 -- ----------------------------
 INSERT INTO `admin_roles` VALUES ('4', '5');
-INSERT INTO `admin_roles` VALUES ('4', '6');
-INSERT INTO `admin_roles` VALUES ('4', '7');
 
 -- ----------------------------
 -- Table structure for attributes
@@ -214,21 +212,26 @@ CREATE TABLE `permissions` (
   `method_name` varchar(255) DEFAULT NULL COMMENT '方法名称',
   `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '上级权限id，0：顶级权限',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of permissions
 -- ----------------------------
-INSERT INTO `permissions` VALUES ('1', '商品模块', null, null, null, '0');
-INSERT INTO `permissions` VALUES ('2', '商品列表', null, 'goods', 'lst', '1');
-INSERT INTO `permissions` VALUES ('3', '添加商品', null, 'goods', 'add', '2');
-INSERT INTO `permissions` VALUES ('7', '修改商品', null, 'goods', 'edit', '2');
-INSERT INTO `permissions` VALUES ('9', '删除商品', null, 'goods', 'del', '2');
-INSERT INTO `permissions` VALUES ('10', '权限模块', null, null, null, '0');
-INSERT INTO `permissions` VALUES ('11', '权限列表', null, 'permission', 'lst', '10');
-INSERT INTO `permissions` VALUES ('12', '添加权限', null, 'permissions', 'add', '11');
-INSERT INTO `permissions` VALUES ('13', '修改权限', null, 'permissions', 'edit', '11');
-INSERT INTO `permissions` VALUES ('14', '删除权限', null, 'permissions', 'del', '11');
+INSERT INTO `permissions` VALUES ('1', '商品管理', null, null, null, '0');
+INSERT INTO `permissions` VALUES ('2', '商品列表', 'admin', 'goods', 'lst', '1');
+INSERT INTO `permissions` VALUES ('3', '添加商品', 'admin', 'goods', 'add', '2');
+INSERT INTO `permissions` VALUES ('7', '修改商品', 'admin', 'goods', 'edit', '2');
+INSERT INTO `permissions` VALUES ('9', '删除商品', 'admin', 'goods', 'del', '2');
+INSERT INTO `permissions` VALUES ('10', '权限管理', null, null, null, '0');
+INSERT INTO `permissions` VALUES ('11', '权限列表', 'admin', 'permission', 'lst', '10');
+INSERT INTO `permissions` VALUES ('12', '添加权限', 'admin', 'permissions', 'add', '11');
+INSERT INTO `permissions` VALUES ('13', '修改权限', 'admin', 'permissions', 'edit', '11');
+INSERT INTO `permissions` VALUES ('14', '删除权限', 'admin', 'permissions', 'del', '11');
+INSERT INTO `permissions` VALUES ('15', '分类列表', 'admin', 'sort', 'lst', '1');
+INSERT INTO `permissions` VALUES ('16', '品牌列表', 'admin', 'brand', 'lst', '1');
+INSERT INTO `permissions` VALUES ('17', '类型列表', 'admin', 'type', 'lst', '1');
+INSERT INTO `permissions` VALUES ('18', '角色列表', 'admin', 'role', 'lst', '10');
+INSERT INTO `permissions` VALUES ('19', '管理列表', 'admin', 'admin', 'lst', '10');
 
 -- ----------------------------
 -- Table structure for roles
@@ -268,9 +271,6 @@ INSERT INTO `role_permissions` VALUES ('11', '2');
 INSERT INTO `role_permissions` VALUES ('11', '3');
 INSERT INTO `role_permissions` VALUES ('11', '7');
 INSERT INTO `role_permissions` VALUES ('11', '9');
-INSERT INTO `role_permissions` VALUES ('5', '1');
-INSERT INTO `role_permissions` VALUES ('5', '2');
-INSERT INTO `role_permissions` VALUES ('5', '9');
 INSERT INTO `role_permissions` VALUES ('6', '1');
 INSERT INTO `role_permissions` VALUES ('6', '2');
 INSERT INTO `role_permissions` VALUES ('6', '3');
@@ -284,6 +284,8 @@ INSERT INTO `role_permissions` VALUES ('6', '14');
 INSERT INTO `role_permissions` VALUES ('7', '10');
 INSERT INTO `role_permissions` VALUES ('7', '11');
 INSERT INTO `role_permissions` VALUES ('7', '14');
+INSERT INTO `role_permissions` VALUES ('5', '1');
+INSERT INTO `role_permissions` VALUES ('5', '2');
 
 -- ----------------------------
 -- Table structure for sorts
