@@ -9,7 +9,6 @@ class PermissionController extends Controller
 {
     /**
      * 权限列表
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
@@ -20,7 +19,6 @@ class PermissionController extends Controller
     /**
      * 添加权限
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -38,7 +36,6 @@ class PermissionController extends Controller
     /**
      * 修改权限
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
@@ -60,7 +57,6 @@ class PermissionController extends Controller
     /**
      * 删除权限
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {

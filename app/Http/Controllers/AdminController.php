@@ -28,7 +28,6 @@ class AdminController extends Controller
     /**
      * 添加管理员
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -50,7 +49,6 @@ class AdminController extends Controller
     /**
      * 修改管理员
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
@@ -84,7 +82,6 @@ class AdminController extends Controller
     /**
      * 删除管理员
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {

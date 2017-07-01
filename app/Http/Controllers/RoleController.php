@@ -12,7 +12,6 @@ class RoleController extends Controller
 {
     /**
      * 角色列表
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
@@ -28,7 +27,6 @@ class RoleController extends Controller
     /**
      * 添加角色
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -49,7 +47,6 @@ class RoleController extends Controller
     /**
      * 修改角色
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
@@ -76,7 +73,6 @@ class RoleController extends Controller
     /**
      * 删除角色
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {

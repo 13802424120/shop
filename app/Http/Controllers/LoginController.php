@@ -39,7 +39,6 @@ class LoginController extends Controller
     /**
      * 退出登录
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function logout(Request $request)
     {

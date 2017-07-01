@@ -10,7 +10,6 @@ class TypeController extends Controller
 {
     /**
      * 类型列表
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
@@ -21,7 +20,6 @@ class TypeController extends Controller
     /**
      * 添加类型
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -37,7 +35,6 @@ class TypeController extends Controller
     /**
      * 修改类型
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
@@ -54,7 +51,6 @@ class TypeController extends Controller
     /**
      * 删除类型
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {

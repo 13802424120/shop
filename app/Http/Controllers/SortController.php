@@ -9,7 +9,6 @@ class SortController extends Controller
 {
     /**
      * 分类列表
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
@@ -20,7 +19,6 @@ class SortController extends Controller
     /**
      * 添加分类
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -39,7 +37,6 @@ class SortController extends Controller
     /**
      * 修改分类
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
@@ -63,7 +60,6 @@ class SortController extends Controller
     /**
      * 删除分类
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {

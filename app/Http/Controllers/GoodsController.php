@@ -17,7 +17,6 @@ class GoodsController extends Controller
 {
     /**
      * 商品列表
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function lst()
     {
@@ -36,7 +35,6 @@ class GoodsController extends Controller
     /**
      * 添加商品
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function add(Request $request)
     {
@@ -75,7 +73,6 @@ class GoodsController extends Controller
     /**
      * 修改商品
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function edit(Request $request)
     {
@@ -141,7 +138,6 @@ class GoodsController extends Controller
     /**
      * 删除商品
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function del(Request $request)
     {
@@ -163,7 +159,6 @@ class GoodsController extends Controller
     /**
      * 商品库存量
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function stock(Request $request)
     {
