@@ -13,7 +13,7 @@
                     <select name="parent_id" class="input w50">
                         <option value="">请选择分类</option>
                         @foreach ($sort_data as $v)
-                            <option value="{{ $v['id'] }}"  @if ($v['id'] == $update['parent_id']) selected = "selected" @endif>{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                            <option value="{{ $v['id'] }}"  @if ($v['id'] == $res->parent_id) selected = "selected" @endif>{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                         @endforeach
                     </select>
                     <div class="tipss">不选择上级分类默认为一级分类</div>
@@ -24,7 +24,7 @@
                     <label>分类名称：</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="sort_name" value="{{ $update['sort_name'] }}"/>
+                    <input type="text" class="input w50" name="sort_name" value="{{ $res->sort_name }}"/>
                     <div class="tips"></div>
                 </div>
             </div>

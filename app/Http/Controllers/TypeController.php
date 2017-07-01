@@ -26,9 +26,8 @@ class TypeController extends Controller
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
-            $type = new Type();
-            $type->type_name = $request->type_name;
-            if ($type->save()) {
+            $res = Type::create($request->all());
+            if ($res) {
                 return redirect('type/lst');
             }
         }
@@ -43,14 +42,13 @@ class TypeController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $update = Type::find($id);
+        $res = Type::find($id);
         if ($request->isMethod('post')) {
-            $update->type_name = $request->type_name;
-            if ($update->save()) {
+            if ($res->update($request->all())) {
                 return redirect('type/lst');
             }
         }
-        return view('type/edit', ['update' => $update]);
+        return view('type/edit', ['res' => $res]);
     }
 
     /**

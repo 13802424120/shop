@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -26,7 +27,11 @@ class BrandController extends Controller
     {
         if ($request->isMethod('post')) {
             // 上传图片
-            $request['logo'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
+            if ($request->hasFile('photo') && $request->photo->isValid()) {
+                $extension = $request->photo->extension();
+                $file_name = date("YmdHis") . '.' . $extension;
+                $request['logo'] = $request->photo->storeAs('images', $file_name);
+            }
             $res = Brand::create($request->all());
             if ($res) {
                 return redirect('brand/lst');
@@ -45,8 +50,14 @@ class BrandController extends Controller
         $id = $request->id;
         $res = Brand::find($id);
         if ($request->isMethod('post')) {
-            // 上传图片
-            $request['logo'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
+            // 图片上传
+            if ($request->hasFile('photo') && $request->photo->isValid()) {
+                // 先删除原图片
+                Storage::delete($res->logo);
+                $extension = $request->photo->extension();
+                $file_name = date("YmdHis") . '.' . $extension;
+                $request['logo'] = $request->photo->storeAs('images', $file_name);
+            }
             if ($res->update($request->all())) {
                 return redirect('brand/lst');
             }
@@ -62,7 +73,10 @@ class BrandController extends Controller
     public function del(Request $request)
     {
         $id = $request->id;
+        $res = Brand::find($id);
         if (Brand::destroy($id)) {
+            // 删除图片
+            Storage::delete($res->logo);
             return redirect('brand/lst');
         }
     }

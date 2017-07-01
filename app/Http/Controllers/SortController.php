@@ -44,21 +44,19 @@ class SortController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $update = Sort::find($id);
+        $res = Sort::find($id);
         if ($request->isMethod('post')) {
             // 顶级分类不允许选择上级分类
-            if ($update->parent_id == 0 && $request->parent_id != 0) {
+            if ($res->parent_id == 0 && $request->parent_id != 0) {
                 return redirect('sort');
             }
-            $update->parent_id = $request->parent_id;
-            $update->sort_name = $request->sort_name;
-            if ($update->save()) {
+            if ($res->update($request->all())) {
                 return redirect('sort/lst');
             };
         }
 
         $sort_data = Sort::getData();
-        return view('sort.edit', ['update' => $update, 'sort_data' => $sort_data]);
+        return view('sort.edit', ['res' => $res, 'sort_data' => $sort_data]);
     }
 
     /**

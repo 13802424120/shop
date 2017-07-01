@@ -11,6 +11,7 @@ use App\Sort;
 use App\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class GoodsController extends Controller
 {
@@ -20,6 +21,12 @@ class GoodsController extends Controller
      */
     public function lst()
     {
+//        header('Content-type: image/jpg');
+//        $data = Goods::where('id', 34)->get();
+//        foreach ($data as $v) {
+//            echo Storage::get($v->image);
+//
+//        }
         $goods_data = DB::table('goods as a')
             ->select('a.*', 'b.brand_name', 'c.sort_name', DB::raw('GROUP_CONCAT(e.sort_name) as extend_sort_name'))
             ->leftJoin('brands as b', 'a.brand_id', 'b.id')
@@ -41,7 +48,11 @@ class GoodsController extends Controller
     {
         if ($request->isMethod('post')) {
             // 上传图片
-            $request['image'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
+            if ($request->hasFile('photo') && $request->photo->isValid()) {
+                $extension = $request->photo->extension();
+                $file_name = date("YmdHis") . '.' . $extension;
+                $request['image'] = $request->photo->storeAs('images', $file_name);
+            }
             $res = Goods::create($request->all());
             if ($res) {
                 $goods_id = $res->id;
@@ -78,10 +89,12 @@ class GoodsController extends Controller
         $res = Goods::find($id);
         if ($request->isMethod('post')) {
             // 上传图片
-            $request['image'] = $request->hasFile('photo') ? $request->photo->store('photo') : null;
-            if ($request->hasFile('photo')) {
-                $path = $request->photo->store('photo');
-                $request['image'] = $path;
+            if ($request->hasFile('photo') && $request->photo->isValid()) {
+                // 先删除原图片
+                Storage::delete($res->logo);
+                $extension = $request->photo->extension();
+                $file_name = date("YmdHis") . '.' . $extension;
+                $request['image'] = $request->photo->storeAs('images', $file_name);
             }
             if ($res->update($request->all())) {
                 // 修改商品扩展分类
@@ -139,6 +152,7 @@ class GoodsController extends Controller
     public function del(Request $request)
     {
         $id = $request->id;
+        $res = Goods::find($id);
         // 删除扩展分类
         ExtendSort::delExtendSort($id);
         // 删除商品库存量
@@ -146,6 +160,8 @@ class GoodsController extends Controller
         // 删除商品属性
         GoodsAttr::delGoodsAttr($id);
         if (Goods::destroy($id)) {
+            // 删除图片
+            Storage::delete($res->image);
             return redirect('goods/lst');
         }
     }
