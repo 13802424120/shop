@@ -29,7 +29,7 @@ class SortController extends Controller
             $res = Sort::create($request->all());
             if ($res) {
                 return redirect('sort/lst');
-            };
+            }
         }
 
         $sort_data = Sort::getTreeData();
@@ -48,7 +48,7 @@ class SortController extends Controller
         if ($request->isMethod('post')) {
             if ($res->update($request->all())) {
                 return redirect('sort/lst');
-            };
+            }
         }
 
         $sort_data = Sort::getTreeData();
@@ -71,7 +71,8 @@ class SortController extends Controller
         // 先找出所有子分类id
         $child_data = Sort::getChildData($id);
         array_unshift($child_data, (int)$id);
-        Sort::destroy($child_data);
-        return redirect('sort/lst');
+        if (Sort::destroy($child_data)) {
+            return redirect('sort/lst');
+        }
     }
 }
