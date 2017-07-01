@@ -21,12 +21,6 @@ class GoodsController extends Controller
      */
     public function lst()
     {
-//        header('Content-type: image/jpg');
-//        $data = Goods::where('id', 34)->get();
-//        foreach ($data as $v) {
-//            echo Storage::get($v->image);
-//
-//        }
         $goods_data = DB::table('goods as a')
             ->select('a.*', 'b.brand_name', 'c.sort_name', DB::raw('GROUP_CONCAT(e.sort_name) as extend_sort_name'))
             ->leftJoin('brands as b', 'a.brand_id', 'b.id')
@@ -68,7 +62,7 @@ class GoodsController extends Controller
             }
         }
         $brand_data = Brand::all();
-        $sort_data = Sort::getData();
+        $sort_data = Sort::getTreeData();
         $type_data = Type::all();
         return view('goods.add',
             ['brand_data' => $brand_data,
@@ -111,7 +105,7 @@ class GoodsController extends Controller
             }
         }
         $brand_data = Brand::all();
-        $sort_data = Sort::getData();
+        $sort_data = Sort::getTreeData();
         $extend_sort_data = ExtendSort::where('goods_id', $id)->pluck('sort_id')->toArray();
         $type_data = Type::all();
         // 取出当前类型下所有的属性

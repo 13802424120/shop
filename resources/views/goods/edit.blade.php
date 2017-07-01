@@ -60,7 +60,7 @@
                             @foreach ($extend_sort_data as $key => $cost)
                                 <div class="form-group">
                                     <div class="label">
-                                        <a onclick="addNewSort(this);" href="#">@if ($key == 0)[+] @else[-] @endif</a>
+                                        <a onclick="addNewSort(this);" href="#">@if ($key == 0) [+] @else [-] @endif</a>
                                         <label>扩展分类：</label>
                                     </div>
                                     <div class="field">

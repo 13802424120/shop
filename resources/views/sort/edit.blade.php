@@ -11,12 +11,17 @@
                 </div>
                 <div class="field">
                     <select name="parent_id" class="input w50">
-                        <option value="">请选择分类</option>
+                        <option value="0">顶级分类</option>
                         @foreach ($sort_data as $v)
-                            <option value="{{ $v['id'] }}"  @if ($v['id'] == $res->parent_id) selected = "selected" @endif>{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
+                            @if ($v['id'] == $res->id || in_array($v['id'], $child_data)) @continue @endif
+                            @if ($v['id'] == $res->parent_id)
+                                @php $select = 'selected = "selected"' @endphp
+                            @else
+                                @php $select = '' @endphp
+                            @endif
+                            <option value="{{ $v['id'] }}" {{ $select }}>{{ str_repeat('-', 8*$v['level']) . $v['sort_name'] }}</option>
                         @endforeach
                     </select>
-                    <div class="tipss">不选择上级分类默认为一级分类</div>
                 </div>
             </div>
             <div class="form-group">

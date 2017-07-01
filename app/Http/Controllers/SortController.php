@@ -13,7 +13,7 @@ class SortController extends Controller
      */
     public function lst()
     {
-        $sort_data = Sort::getData();
+        $sort_data = Sort::getTreeData();
         return view('sort.lst', ['sort_data' => $sort_data]);
     }
 
@@ -32,7 +32,7 @@ class SortController extends Controller
             };
         }
 
-        $sort_data = Sort::getData();
+        $sort_data = Sort::getTreeData();
         return view('sort.add', ['sort_data' => $sort_data]);
     }
 
@@ -46,17 +46,18 @@ class SortController extends Controller
         $id = $request->id;
         $res = Sort::find($id);
         if ($request->isMethod('post')) {
-            // 顶级分类不允许选择上级分类
-            if ($res->parent_id == 0 && $request->parent_id != 0) {
-                return redirect('sort');
-            }
             if ($res->update($request->all())) {
                 return redirect('sort/lst');
             };
         }
 
-        $sort_data = Sort::getData();
-        return view('sort.edit', ['res' => $res, 'sort_data' => $sort_data]);
+        $sort_data = Sort::getTreeData();
+        // 取出当前分类的子分类
+        $child_data = Sort::getChildData($id);
+        return view('sort.edit', ['res' => $res,
+            'sort_data' => $sort_data,
+            'child_data' => $child_data,
+        ]);
     }
 
     /**
@@ -67,11 +68,10 @@ class SortController extends Controller
     public function del(Request $request)
     {
         $id = $request->id;
-        $data = Sort::where('parent_id', $id)->get();
-        // 父分类下有子分类不允许删除
-        if (!$data->first()) {
-            Sort::destroy($id);
-        }
+        // 先找出所有子分类id
+        $child_data = Sort::getChildData($id);
+        array_unshift($child_data, (int)$id);
+        Sort::destroy($child_data);
         return redirect('sort/lst');
     }
 }
