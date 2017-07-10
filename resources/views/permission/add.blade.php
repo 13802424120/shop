@@ -30,28 +30,10 @@
             </div>
             <div class="form-group">
                 <div class="label">
-                    <label>模块名称：</label>
+                    <label>路由地址：</label>
                 </div>
                 <div class="field">
-                    <input type="text" class="input w50" name="module_name"/>
-                    <div class="tips"></div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="label">
-                    <label>控制器名称：</label>
-                </div>
-                <div class="field">
-                    <input type="text" class="input w50" name="controller_name"/>
-                    <div class="tips"></div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="label">
-                    <label>方法名称：</label>
-                </div>
-                <div class="field">
-                    <input type="text" class="input w50" name="method_name"/>
+                    <input type="text" class="input w50" name="route"/>
                     <div class="tips"></div>
                 </div>
             </div>

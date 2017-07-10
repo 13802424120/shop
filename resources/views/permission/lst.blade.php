@@ -14,17 +14,13 @@
     <table class="table table-hover text-center">
         <tr>
             <th>权限名称</th>
-            <th>模块名称</th>
-            <th>控制器名称</th>
-            <th>方法名称</th>
+            <th>路由地址</th>
             <th>操作</th>
         </tr>
         @foreach ($data as $v)
             <tr>
                 <td style="text-align:left;padding-left: 20px;">{{ str_repeat('-', 8 * $v['level']) . $v['permission_name'] }}</td>
-                <td>{{ $v['module_name'] }}</td>
-                <td>{{ $v['controller_name'] }}</td>
-                <td>{{ $v['method_name'] }}</td>
+                <td>{{ $v['route'] }}</td>
                 <td>
                     <div class="button-group">
                         <a type="button" class="button border-main"

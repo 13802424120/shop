@@ -29,7 +29,7 @@
     "></span>{{ $val->permission_name }}</h2>
     <ul style="display:block">
     @foreach ($val->child as $v )
-        <li><a href="@php echo $v->controller_name . '/' . $v->method_name @endphp" target="right"><span class="icon-caret-right"></span>{{ $v->permission_name }}</a></li>
+        <li><a href="@php echo $v->route @endphp" target="right"><span class="icon-caret-right"></span>{{ $v->permission_name }}</a></li>
     @endforeach
   </ul>
   @endforeach

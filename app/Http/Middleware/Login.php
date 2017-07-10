@@ -22,11 +22,10 @@ class Login
             $admin_id = $request->session()->get('admin_id');
             $path = $request->path();
             // 超级管理员直接通过
-            if ($admin_id == 1 || $path == '/') {
+            if ($admin_id == 1 || $path == 'admin') {
                 return $next($request);
             }
-            $arr = explode('/',$path);
-            $res = Permission::checkPermission($admin_id, $arr);
+            $res = Permission::checkPermission($admin_id, $path);
             return $res ? $next($request) : redirect('tips')->with('status', '无权访问！');
         }
         return redirect('login');

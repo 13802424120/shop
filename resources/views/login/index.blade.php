@@ -56,7 +56,7 @@
             success: function (data) {
                 alert(data.message);
                 if (data.code == 1) {
-                    self.location = "{{ url('/') }}";
+                    self.location = "{{ url('/admin') }}";
                 }
             }
         });

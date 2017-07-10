@@ -13,9 +13,11 @@
 
 Route::group(['middleware' => 'login'], function () {
     //首页
-    Route::get('/', 'IndexController@index');
+    Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+        Route::get('/', 'IndexController@index');
+    });
 
-    Route::group(['prefix' => 'sort'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'sort'], function () {
         //分类列表
         Route::get('lst', 'SortController@lst');
         //添加分类
@@ -26,7 +28,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('del', 'SortController@del');
     });
 
-    Route::group(['prefix' => 'goods'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'goods'], function () {
         //商品列表
         Route::get('lst', 'GoodsController@lst');
         //添加商品
@@ -41,7 +43,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::any('stock', 'GoodsController@stock');
     });
 
-    Route::group(['prefix' => 'brand'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'brand'], function () {
         //品牌列表
         Route::get('lst', 'BrandController@lst');
         //添加品牌
@@ -52,7 +54,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::any('del', 'BrandController@del');
     });
 
-    Route::group(['prefix' => 'type'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'type'], function () {
         //类型列表
         Route::get('lst', 'TypeController@lst');
         //添加类型
@@ -63,7 +65,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::any('del', 'TypeController@del');
     });
 
-    Route::group(['prefix' => 'attribute'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'attribute'], function () {
         //属性列表
         Route::get('lst', 'AttributeController@lst');
         //添加属性
@@ -76,7 +78,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('getAttr', 'AttributeController@getAttr');
     });
 
-    Route::group(['prefix' => 'permission'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'permission'], function () {
         //权限列表
         Route::get('lst', 'permissionController@lst');
         //添加权限
@@ -87,7 +89,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::any('del', 'permissionController@del');
     });
 
-    Route::group(['prefix' => 'role'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'role'], function () {
         //角色列表
         Route::get('lst', 'roleController@lst');
         //添加角色
@@ -98,7 +100,7 @@ Route::group(['middleware' => 'login'], function () {
         Route::any('del', 'roleController@del');
     });
 
-    Route::group(['prefix' => 'admin'], function () {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         //管理员列表
         Route::get('lst', 'adminController@lst');
         //添加管理员
@@ -110,7 +112,7 @@ Route::group(['middleware' => 'login'], function () {
     });
 });
 
-Route::group(['prefix' => 'login'], function () {
+Route::group(['namespace' => 'Admin', 'prefix' => 'login'], function () {
     // 后台登录
     Route::get('/', 'loginController@index');
     // 验证登录

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Brand;
 use App\ExtendSort;
@@ -12,6 +12,7 @@ use App\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
 class GoodsController extends Controller
 {

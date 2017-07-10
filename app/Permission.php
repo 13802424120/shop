@@ -16,7 +16,7 @@ class Permission extends Model
     /**
      * @var array
      */
-    protected $fillable = ['permission_name', 'module_name', 'controller_name', 'method_name', 'parent_id'];
+    protected $fillable = ['permission_name', 'route', 'parent_id'];
 
     /**
      * @return array
@@ -51,15 +51,13 @@ class Permission extends Model
     /**
      * 验证管理员权限
      * @param $admin_id
-     * @param $arr
+     * @param $path
      * @return bool
      */
-    public static function checkPermission($admin_id, $arr)
+    public static function checkPermission($admin_id, $path)
     {
         $odds['a.admin_id'] = $admin_id;
-        $odds['c.module_name'] = 'admin';
-        $odds['c.controller_name'] = $arr[0];
-        $odds['c.method_name'] = $arr[1];
+        $odds['c.route'] = $path;
         $state = DB::table('admin_roles as a')
             ->leftJoin('role_permissions as b', 'b.role_id', 'a.role_id')
             ->leftJoin('permissions as c', 'c.id', 'b.permission_id')
@@ -77,7 +75,7 @@ class Permission extends Model
         } else {
             // 取出当前管理员所在角色所拥有的权限
             $data = DB::table('admin_roles as a')
-                ->select(DB::raw('DISTINCT c.id, c.permission_name, c.module_name, c.controller_name, c.method_name, c.parent_id'))
+                ->select(DB::raw('DISTINCT c.id, c.permission_name, c.route, c.parent_id'))
                 ->leftJoin('role_permissions as b', 'b.role_id', 'a.role_id')
                 ->leftJoin('permissions as c', 'c.id', 'b.permission_id')
                 ->where('a.admin_id', $admin_id)
